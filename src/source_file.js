@@ -1,3 +1,4 @@
+import AbstractExternalPackage from "./abstract_external_package";
 import AbstractSourceFile from "./abstract_source_file";
 import CommonInfo from "./common_info";
 
@@ -12,8 +13,8 @@ export default class SourceFile extends AbstractSourceFile {
 	 * @param {string} file The path of the source file to be bundled relative to the
 	 *                 `inputDirectory` of `CommonInfoBuilder` class.
 	 * @param {any} plugins Plugins that will be used to bundle the source file.
-	 * @param {SourceFile[]} externals Optional. Array of external packages that will not be included
-	 *                                 in the bundle.
+	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
+	 *                                    not be included in the bundle.
 	 */
 	constructor(commonInfo, name, file, plugins, externals = []) {
 		super();
