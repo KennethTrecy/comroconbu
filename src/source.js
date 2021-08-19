@@ -11,7 +11,7 @@ export default class Source {
 	 * @param {Source[]} externals Optional. Array of external packages that will not be included in
 	 *                             the bundle.
 	 */
-	constructor(name, file, plugins, externals) {
+	constructor(name, file, plugins, externals = []) {
 		this._name = name;
 		this._file = file;
 		this._plugins = plugins;
