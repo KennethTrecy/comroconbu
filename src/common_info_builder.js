@@ -1,5 +1,5 @@
 /**
- * Creates a builder which contains common information for subsequent configuration to be created.
+ * Represents a builder which contains common information for configurations that will be created.
  */
 export default class CommonInfoBuilder {
 	/**
