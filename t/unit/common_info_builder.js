@@ -1,4 +1,4 @@
-import { CommonInfoBuilder, Source } from "../../src";
+import { CommonInfoBuilder, SourceFile } from "../../src";
 import CommonInfo from "../../src/common_info";
 
 it("can build source representation", () => {
@@ -13,7 +13,7 @@ it("can build source representation", () => {
 
 	const source = builder.configure(name, file, plugins, externals);
 
-	expect(source).toStrictEqual(new Source(
+	expect(source).toStrictEqual(new SourceFile(
 		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		name,
 		file,
