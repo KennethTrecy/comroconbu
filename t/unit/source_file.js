@@ -19,14 +19,14 @@ it("can become into configuration array without externals and plugins", () => {
 
 	const configurations = sourceFile.toConfigurationArray();
 
-	expect(configurations).toStrictEqual({
+	expect(configurations).toStrictEqual([{
 		"input": "a/e.js",
 		"output": {
 			"file": "b/e.js",
 			"format": "c",
 			"name": "d"
 		}
-	});
+	}]);
 });
 
 it("can become into configuration array with plugins but without externals", () => {
@@ -47,7 +47,7 @@ it("can become into configuration array with plugins but without externals", () 
 
 	const configurations = sourceFile.toConfigurationArray();
 
-	expect(configurations).toStrictEqual({
+	expect(configurations).toStrictEqual([{
 		"input": "f/j.js",
 		"output": {
 			"file": "g/j.js",
@@ -55,5 +55,5 @@ it("can become into configuration array with plugins but without externals", () 
 			"name": "i"
 		},
 		plugins
-	});
+	}]);
 });

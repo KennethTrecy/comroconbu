@@ -45,10 +45,12 @@ export default class SourceFile extends AbstractSourceFile {
 			configuration.plugins = plugins;
 		}
 
+		const configurations = [ configuration ];
+
 		const _external = [];
 		const _globals = {};
 
 
-		return configuration;
+		return configurations;
 	}
 }
