@@ -1,3 +1,5 @@
+import CommonInfo from "./common_info";
+
 /**
  * Represents a builder which contains common information for configurations that will be created.
  */
@@ -9,8 +11,6 @@ export default class CommonInfoBuilder {
 	 * @param {string} outputFormat Output format for bundled files.
 	 */
 	constructor(inputDirectory, outputDirectory, outputFormat) {
-		this._inputDirectory = inputDirectory;
-		this._outputDirectory = outputDirectory;
-		this._outputFormat = outputFormat;
+		this._commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
 	}
 }
