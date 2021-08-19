@@ -4,5 +4,10 @@
   "description": "Common Rollup configuration builder",
   "main": "src/index.js",
   "author": "Kenneth Trecy Tobias <33564322+KennethTrecy@users.noreply.github.com>",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "rollup": "^2.56.2",
+    "rollup-jest": "^1.1.2"
+  }
 }
