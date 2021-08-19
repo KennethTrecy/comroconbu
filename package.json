@@ -1,0 +1,8 @@
+{
+  "name": "comroconbu",
+  "version": "0.1.0-dev",
+  "description": "Common Rollup configuration builder",
+  "main": "src/index.js",
+  "author": "Kenneth Trecy Tobias <33564322+KennethTrecy@users.noreply.github.com>",
+  "private": true
+}
