@@ -48,9 +48,20 @@ export default class SourceFile extends AbstractSourceFile {
 
 		const configurations = [ configuration ];
 
-		const _external = [];
-		const _globals = {};
+		const external = [];
+		const globals = {};
 
+		for (const externalPackage of this._externals) {
+			const packageName = externalPackage.getExternalName();
+			const identifier = externalPackage.getGlobalName();
+
+			external.push(packageName);
+			globals[packageName] = identifier;
+			configurations.push(...externalPackage.toConfigurationArray());
+		}
+
+		if (external.length > 0) configuration.external = external;
+		if (Object.values(globals).length > 0) configuration.output.globals = globals;
 
 		return configurations;
 	}
