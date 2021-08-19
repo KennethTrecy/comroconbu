@@ -1,6 +1,6 @@
 import CommonInfoBuilder from "./common_info_builder";
 import LinkedExternalPackage from "./external_package/linked_external_package";
-import SourceFile from "./source_file";
+import SourceFile from "./source_file/source_file";
 
 export {
 	CommonInfoBuilder,

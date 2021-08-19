@@ -1,6 +1,6 @@
-import AbstractExternalPackage from "./abstract_external_package";
-import AbstractSourceFile from "./abstract_source_file";
-import CommonInfo from "./common_info";
+import AbstractExternalPackage from "../abstract_external_package";
+import AbstractSourceFile from "../abstract_source_file";
+import CommonInfo from "../common_info";
 
 /**
  * Represents a source file that will be bundled.
