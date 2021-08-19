@@ -15,7 +15,14 @@ export default class AbstractExternalPackage extends AbstractSourceFile {
 		this._globalName = globalName;
 	}
 
-	getExternalName() { return this._externalName; }
-
-	getGlobalName() { return this._globalName; }
+	/**
+	 * Returns the global identifiers exposed by this external package.
+	 * @returns {Object} An object containing the name of the external package as key with
+	 *                   corresponding global identifier as value.
+	 */
+	getGlobals() {
+		return {
+			[this._externalName]: this._globalName
+		};
+	}
 }

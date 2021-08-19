@@ -1,6 +1,6 @@
 import AbstractExternalPackage from "./abstract_external_package";
 import CommonInfo from "./common_info";
-import Source from "./source_file";
+import Source from "./source_file/source_file";
 
 /**
  * Represents a builder which contains common information for configurations that will be created.

@@ -52,11 +52,13 @@ export default class SourceFile extends AbstractSourceFile {
 		const globals = {};
 
 		for (const externalPackage of this._externals) {
-			const packageName = externalPackage.getExternalName();
-			const identifier = externalPackage.getGlobalName();
+			const exposedGlobals = externalPackage.getGlobals();
 
-			external.push(packageName);
-			globals[packageName] = identifier;
+			for (const [ packageName, globalIdentifier ] of Object.entries(exposedGlobals)) {
+				external.push(packageName);
+				globals[packageName] = globalIdentifier;
+			}
+
 			configurations.push(...externalPackage.toConfigurationArray());
 		}
 
