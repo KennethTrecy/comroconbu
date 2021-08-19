@@ -1,4 +1,4 @@
-import AbstractExternalPackage from "./abstract_external_package";
+import AbstractExternalPackage from "../abstract_external_package";
 
 /**
  * Represents an external package linked by using CDN or others.
