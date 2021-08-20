@@ -51,7 +51,7 @@ export default class SourceDirectory extends AbstractSourceFile {
 		}
 
 		for (const externalPackage of this._externals) {
-			configurations.push(...externalPackage);
+			configurations.push(...externalPackage.toConfigurationArray());
 		}
 
 		return configurations;
