@@ -3,6 +3,7 @@ import ImportedExternalPackage from "./external_package/imported_external_packag
 import LinkedExternalPackage from "./external_package/linked_external_package";
 import NamedSourceFile from "./source_file/named_source_file";
 import RebundledExternalPackage from "./external_package/rebundled_external_package";
+import SourceDirectory from "./source_file/source_directory";
 import UnnamedSourceFile from "./source_file/unnamed_source_file";
 
 export {
@@ -11,5 +12,6 @@ export {
 	LinkedExternalPackage,
 	NamedSourceFile,
 	RebundledExternalPackage,
+	SourceDirectory,
 	UnnamedSourceFile
 };
