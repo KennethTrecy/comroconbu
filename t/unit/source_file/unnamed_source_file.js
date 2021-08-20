@@ -161,3 +161,29 @@ it("can include external packages in configuration array", () => {
 		}
 	]);
 });
+
+it("may not append slash", () => {
+	const inputDirectory = "";
+	const outputDirectory = "z";
+	const outputFormat = "aa";
+	const file = "ab.js";
+	const plugins = [];
+	const externals = [];
+	const sourceFile = new UnnamedSourceFile(
+		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
+		file,
+		plugins,
+		externals
+	);
+
+	const configurations = sourceFile.toConfigurationArray();
+
+	expect(configurations).toStrictEqual([ {
+		"input": "ab.js",
+		"output": {
+			"file": "z/ab.js",
+			"format": "aa",
+			interop
+		}
+	} ]);
+});

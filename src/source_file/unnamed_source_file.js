@@ -61,8 +61,12 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	}
 
 	_convertIntoBasicConfiguration() {
-		const input = `${this._commonInfo.inputDirectory}/${this._file}`;
-		const file = `${this._commonInfo.outputDirectory}/${this._file}`;
+		function appendSlashNecessarily(string) {
+			if (string === "") return string;
+			return `${string}/`;
+		}
+		const input = `${appendSlashNecessarily(this._commonInfo.inputDirectory)}${this._file}`;
+		const file = `${appendSlashNecessarily(this._commonInfo.outputDirectory)}${this._file}`;
 		const format = this._commonInfo.outputFormat;
 
 		const configuration = {
