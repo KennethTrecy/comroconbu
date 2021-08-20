@@ -11,9 +11,9 @@ it("can be converted to configuration array", () => {
 	const plugins = [];
 	const externals = [];
 	const externalPackage = new ImportedExternalPackage(
+		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		externalName,
 		globalName,
-		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		file,
 		plugins,
 		externals

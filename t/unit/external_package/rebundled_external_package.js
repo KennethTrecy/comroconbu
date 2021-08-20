@@ -11,9 +11,9 @@ it("can be converted to configuration array", () => {
 	const plugins = [];
 	const externals = [];
 	const externalPackage = new RebundledExternalPackage(
+		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		globalName,
 		subglobals,
-		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		file,
 		plugins,
 		externals
@@ -44,9 +44,9 @@ it("can get multiple globals", () => {
 	const plugins = [];
 	const externals = [];
 	const externalPackage = new RebundledExternalPackage(
+		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		globalName,
 		subglobals,
-		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		file,
 		plugins,
 		externals
