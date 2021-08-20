@@ -14,7 +14,7 @@ export default class RebundledExternalPackage extends AbstractExternalPackage {
 	 *                            external package that will be rebundled.
 	 * @param {string} file The path to the source file which imports the external packages to be
 	 *                      rebundled.
-	 * @param {any} plugins Plugins that will be used to bundle the source file.
+	 * @param {any[]} plugins Plugins that will be used to bundle the source file.
 	 * @param {AbstractExternalPackage[]} [externals=[]] Array of external packages that will not be
 	 *                                                   included in the bundle.
 	 */

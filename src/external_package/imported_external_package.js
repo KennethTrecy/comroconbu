@@ -12,7 +12,7 @@ export default class ImportedExternalPackage extends AbstractExternalPackage {
 	 * @param {string} externalName The name of the linked package.
 	 * @param {string} globalName The global variable that identifies the linked package.
 	 * @param {string} file The path to the source file which imports the external package.
-	 * @param {any} plugins Plugins that will be used to bundle the source file.
+	 * @param {any[]} plugins Plugins that will be used to bundle the source file.
 	 * @param {AbstractExternalPackage[]} [externals=[]] Array of external packages that will not be
 	 *                                                   included in the bundle.
 	 */

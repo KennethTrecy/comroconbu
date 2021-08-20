@@ -27,8 +27,8 @@ export default class CommonInfoBuilder {
 	 * @param {string} file The path of the source file to be bundled relative to the
 	 *                 `inputDirectory` of this class.
 	 * @param {any[]} plugins Plugins that will be used to bundle the source file.
-	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
-	 *                                    not be included in the bundle.
+	 * @param {AbstractExternalPackage[]} [externals=[]] Optional. Array of external packages that
+	 *                                    will not be included in the bundle.
 	 * @returns {NamedSourceFile} A representation of named source file.
 	 */
 	configureNamedSource(name, file, plugins, externals = []) {
@@ -40,8 +40,8 @@ export default class CommonInfoBuilder {
 	 * @param {string} file The path of the source file to be bundled relative to the
 	 *                 `inputDirectory` of this class.
 	 * @param {any[]} plugins Plugins that will be used to bundle the source file.
-	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
-	 *                                    not be included in the bundle.
+	 * @param {AbstractExternalPackage[]} [externals=[]] Optional. Array of external packages that
+	 *                                    will not be included in the bundle.
 	 * @returns {UnnamedSourceFile} A representation of unnamed source files.
 	 */
 	configureUnnamedSource(file, plugins, externals = []) {
@@ -52,9 +52,9 @@ export default class CommonInfoBuilder {
 	 * Creates a representation of source directory.
 	 * @param {any[]} plugins Common plugins to be applied to the source files found in the input
 	 *                      directory.
-	 * @param {AbstractExternalPackage[]} externals Optional. Array of common external packages that
-	 *                                    will not be included in the configuration of each source
-	 *                                    file.
+	 * @param {AbstractExternalPackage[]} [externals=[]] Optional. Array of common external packages
+	 *                                    that will not be included in the configuration of each
+	 *                                    source file.
 	 * @returns {SourceDirectory} A representation of source directory.
 	 */
 	configureSourceDirectory(plugins, externals = []) {
