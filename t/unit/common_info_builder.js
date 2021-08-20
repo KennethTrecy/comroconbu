@@ -11,7 +11,7 @@ it("can build source representation", () => {
 	const plugins = [];
 	const externals = [];
 
-	const source = builder.configure(name, file, plugins, externals);
+	const source = builder.configureNamedSource(name, file, plugins, externals);
 
 	expect(source).toStrictEqual(new NamedSourceFile(
 		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
