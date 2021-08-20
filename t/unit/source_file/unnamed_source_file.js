@@ -85,3 +85,28 @@ it("can become into configuration array with plugins and linked external package
 		plugins
 	} ]);
 });
+
+it("can become into own configuration", () => {
+	const inputDirectory = "o";
+	const outputDirectory = "p";
+	const outputFormat = "q";
+	const file = "r.js";
+	const plugins = [];
+	const externals = [];
+	const sourceFile = new UnnamedSourceFile(
+		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
+		file,
+		plugins,
+		externals
+	);
+
+	const configurations = sourceFile.toConfigurationArray();
+
+	expect(configurations).toStrictEqual([ {
+		"input": "o/r.js",
+		"output": {
+			"file": "p/r.js",
+			"format": "q"
+		}
+	} ]);
+});

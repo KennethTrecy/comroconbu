@@ -23,7 +23,43 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 		this._externals = externals;
 	}
 
+	/**
+	 * Converts the representation into configuration object.
+	 *
+	 * It does not include the configuration of external packages.
+	 *
+	 * @return {{
+	 *    "external": string[]
+	 *    "input": string,
+	 *    "output": {
+	 *       "file": string,
+	 *       "format": string,
+	 *       "globals": Object,
+	 *       "interop": string,
+	 *       "name": string
+	 *    },
+	 *    "plugins": any[]
+	 * }} An object configuration. Note that `output.globals` and `external` are optional.
+	 */
+	toOwnConfiguration() {
+		const configuration = this._convertIntoFullConfiguration();
+
+		return configuration;
+	}
+
 	toConfigurationArray() {
+		const configurations = [];
+
+		const configuration = this._convertIntoFullConfiguration(externalPackage => {
+			configurations.push(...externalPackage.toConfigurationArray());
+		});
+
+		configurations.unshift(configuration);
+
+		return configurations;
+	}
+
+	_convertIntoBasicConfiguration() {
 		const input = `${this._commonInfo.inputDirectory}/${this._file}`;
 		const file = `${this._commonInfo.outputDirectory}/${this._file}`;
 		const format = this._commonInfo.outputFormat;
@@ -36,13 +72,17 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 			}
 		};
 
+		return configuration;
+	}
+
+	_convertIntoFullConfiguration(externalPackageProcessor = null) {
+		const configuration = this._convertIntoBasicConfiguration();
+
 		const plugins = this._plugins;
 
 		if (plugins.length > 0) {
 			configuration.plugins = plugins;
 		}
-
-		const configurations = [ configuration ];
 
 		const external = [];
 		const globals = {};
@@ -55,12 +95,12 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 				globals[packageName] = globalIdentifier;
 			}
 
-			configurations.push(...externalPackage.toConfigurationArray());
+			if (externalPackageProcessor !== null) externalPackageProcessor(externalPackage);
 		}
 
 		if (external.length > 0) configuration.external = external;
 		if (Object.values(globals).length > 0) configuration.output.globals = globals;
 
-		return configurations;
+		return configuration;
 	}
 }
