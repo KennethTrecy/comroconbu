@@ -1,4 +1,4 @@
-import { LinkedExternalPackage, UnnamedSourceFile } from "../../../src";
+import { ImportedExternalPackage, LinkedExternalPackage, UnnamedSourceFile } from "../../../src";
 import CommonInfo from "../../../src/common_info";
 
 it("can become into configuration array without externals and plugins", () => {
@@ -109,4 +109,48 @@ it("can become into own configuration", () => {
 			"format": "q"
 		}
 	} ]);
+});
+
+it("can include external packages in configuration array", () => {
+	const inputDirectory = "s";
+	const outputDirectory = "t";
+	const outputFormat = "u";
+	const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
+	const file = "v.js";
+	const plugins = [];
+	const externalName = "w";
+	const globalName = "x";
+	const externalFile = "y.js";
+	const externals = [
+		new ImportedExternalPackage(commonInfo, externalName, globalName, externalFile, [], [])
+	];
+	const sourceFile = new UnnamedSourceFile(
+		commonInfo,
+		file,
+		plugins,
+		externals
+	);
+
+	const configurations = sourceFile.toConfigurationArray();
+
+	expect(configurations).toStrictEqual([
+		{
+			"external": [ "w" ],
+			"input": "s/v.js",
+			"output": {
+				"file": "t/v.js",
+				"format": "u",
+				"globals": {
+					"w": "x"
+				}
+			}
+		}, {
+			"input": "s/y.js",
+			"output": {
+				"file": "t/y.js",
+				"format": "u",
+				"name": "x"
+			}
+		}
+	]);
 });
