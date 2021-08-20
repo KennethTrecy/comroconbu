@@ -5,6 +5,7 @@ import NamedSourceFile from "./source_file/named_source_file";
 import RebundledExternalPackage from "./external_package/rebundled_external_package";
 import SourceDirectory from "./source_file/source_directory";
 import UnnamedSourceFile from "./source_file/unnamed_source_file";
+import interop from "./interop";
 
 export {
 	CommonInfoBuilder,
@@ -13,5 +14,6 @@ export {
 	NamedSourceFile,
 	RebundledExternalPackage,
 	SourceDirectory,
-	UnnamedSourceFile
+	UnnamedSourceFile,
+	interop
 };

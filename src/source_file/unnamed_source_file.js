@@ -1,6 +1,7 @@
 import AbstractExternalPackage from "../abstract_external_package";
 import AbstractSourceFile from "../abstract_source_file";
 import CommonInfo from "../common_info";
+import interop from "../interop";
 
 /**
  * Represents an module file.
@@ -68,7 +69,8 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 			input,
 			"output": {
 				file,
-				format
+				format,
+				interop
 			}
 		};
 

@@ -1,4 +1,4 @@
-import { LinkedExternalPackage, NamedSourceFile } from "../../../src";
+import { LinkedExternalPackage, NamedSourceFile, interop } from "../../../src";
 import CommonInfo from "../../../src/common_info";
 
 it("can become into configuration array without externals and plugins", () => {
@@ -24,6 +24,7 @@ it("can become into configuration array without externals and plugins", () => {
 		"output": {
 			"file": "b/e.js",
 			"format": "c",
+			interop,
 			"name": "d"
 		}
 	} ]);
@@ -52,6 +53,7 @@ it("can become into configuration array with plugins but without externals", () 
 		"output": {
 			"file": "g/j.js",
 			"format": "h",
+			interop,
 			"name": "i"
 		},
 		plugins
@@ -89,6 +91,7 @@ it("can become into configuration array with plugins and linked external package
 			"globals": {
 				"p": "q"
 			},
+			interop,
 			"name": "n"
 		},
 		plugins

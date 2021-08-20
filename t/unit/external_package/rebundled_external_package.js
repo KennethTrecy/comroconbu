@@ -1,5 +1,5 @@
+import { RebundledExternalPackage, interop } from "../../../src";
 import CommonInfo from "../../../src/common_info";
-import { RebundledExternalPackage } from "../../../src";
 
 it("can be converted to configuration array", () => {
 	const inputDirectory = "a";
@@ -26,6 +26,7 @@ it("can be converted to configuration array", () => {
 		"output": {
 			"file": "b/e.js",
 			"format": "c",
+			interop,
 			"name": "d"
 		}
 	} ]);

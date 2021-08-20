@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { ImportedExternalPackage, SourceDirectory, UnnamedSourceFile } from "../../../src";
+import { ImportedExternalPackage, SourceDirectory, UnnamedSourceFile, interop } from "../../../src";
 import CommonInfo from "../../../src/common_info";
 import { sep } from "path";
 
@@ -44,19 +44,22 @@ it("can become into configuration array without externals and plugins", () => {
 			"input": "t/dummy/a.js",
 			"output": {
 				"file": "c/a.js",
-				"format": "d"
+				"format": "d",
+				interop
 			}
 		}, {
 			"input": "t/dummy/README.md",
 			"output": {
 				"file": "c/README.md",
-				"format": "d"
+				"format": "d",
+				interop
 			}
 		}, {
 			"input": `t/dummy/b${sep}c.js`,
 			"output": {
 				"file": `c/b${sep}c.js`,
-				"format": "d"
+				"format": "d",
+				interop
 			}
 		}
 	]);
@@ -100,14 +103,16 @@ it("can include external packages in configuration array", () => {
 				"format": "f",
 				"globals": {
 					"j": "k"
-				}
+				},
+				interop
 			}
 		}, {
 			"input": "g/l.js",
 			"output": {
 				"file": "h/l.js",
 				"format": "i",
-				"name": "k"
+				"name": "k",
+				interop
 			}
 		}
 	]);

@@ -1,4 +1,5 @@
-import { ImportedExternalPackage, LinkedExternalPackage, UnnamedSourceFile } from "../../../src";
+import { ImportedExternalPackage, LinkedExternalPackage, UnnamedSourceFile, interop }
+	from "../../../src";
 import CommonInfo from "../../../src/common_info";
 
 it("can become into configuration array without externals and plugins", () => {
@@ -21,7 +22,8 @@ it("can become into configuration array without externals and plugins", () => {
 		"input": "a/d.js",
 		"output": {
 			"file": "b/d.js",
-			"format": "c"
+			"format": "c",
+			interop
 		}
 	} ]);
 });
@@ -46,7 +48,8 @@ it("can become into configuration array with plugins but without externals", () 
 		"input": "e/h.js",
 		"output": {
 			"file": "f/h.js",
-			"format": "g"
+			"format": "g",
+			interop
 		},
 		plugins
 	} ]);
@@ -80,7 +83,8 @@ it("can become into configuration array with plugins and linked external package
 			"format": "k",
 			"globals": {
 				"m": "n"
-			}
+			},
+			interop
 		},
 		plugins
 	} ]);
@@ -106,7 +110,8 @@ it("can become into own configuration", () => {
 		"input": "o/r.js",
 		"output": {
 			"file": "p/r.js",
-			"format": "q"
+			"format": "q",
+			interop
 		}
 	} ]);
 });
@@ -142,13 +147,15 @@ it("can include external packages in configuration array", () => {
 				"format": "u",
 				"globals": {
 					"w": "x"
-				}
+				},
+				interop
 			}
 		}, {
 			"input": "s/y.js",
 			"output": {
 				"file": "t/y.js",
 				"format": "u",
+				interop,
 				"name": "x"
 			}
 		}
