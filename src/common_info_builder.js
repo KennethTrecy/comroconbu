@@ -17,7 +17,7 @@ export default class CommonInfoBuilder {
 	}
 
 	/**
-	 * Creates a representation of source.
+	 * Creates a representation of named source file.
 	 * @param {string} name Name of the bundle.
 	 * @param {string} file The path of the source file to be bundled relative to the
 	 *                 `inputDirectory` of this class.
@@ -26,7 +26,7 @@ export default class CommonInfoBuilder {
 	 *                                    not be included in the bundle.
 	 * @returns {NamedSourceFile} A representation of source.
 	 */
-	configure(name, file, plugins, externals = []) {
+	configureNamedSource(name, file, plugins, externals = []) {
 		return new NamedSourceFile(this._commonInfo, name, file, plugins, externals);
 	}
 }
