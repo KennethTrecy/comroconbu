@@ -5,7 +5,7 @@ import CommonInfo from "../common_info";
 /**
  * Represents a source file that will be bundled.
  */
-export default class SourceFile extends AbstractSourceFile {
+export default class NamedSourceFile extends AbstractSourceFile {
 	/**
 	 * Creates a representation of source file.
 	 * @param {CommonInfo} commonInfo Common information for sources.

@@ -1,4 +1,4 @@
-import { LinkedExternalPackage, SourceFile } from "../../../src";
+import { LinkedExternalPackage, NamedSourceFile } from "../../../src";
 import CommonInfo from "../../../src/common_info";
 
 it("can become into configuration array without externals and plugins", () => {
@@ -9,7 +9,7 @@ it("can become into configuration array without externals and plugins", () => {
 	const file = "e.js";
 	const plugins = [];
 	const externals = [];
-	const sourceFile = new SourceFile(
+	const sourceFile = new NamedSourceFile(
 		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		name,
 		file,
@@ -37,7 +37,7 @@ it("can become into configuration array with plugins but without externals", () 
 	const file = "j.js";
 	const plugins = [ jest.fn() ];
 	const externals = [];
-	const sourceFile = new SourceFile(
+	const sourceFile = new NamedSourceFile(
 		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		name,
 		file,
@@ -70,7 +70,7 @@ it("can become into configuration array with plugins and linked external package
 	const externals = [
 		new LinkedExternalPackage(externalName, globalName)
 	];
-	const sourceFile = new SourceFile(
+	const sourceFile = new NamedSourceFile(
 		new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 		name,
 		file,

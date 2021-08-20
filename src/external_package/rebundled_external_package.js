@@ -1,6 +1,6 @@
 import AbstractExternalPackage from "../abstract_external_package";
 import CommonInfo from "../common_info";
-import SourceFile from "../source_file/source_file";
+import NamedSourceFile from "../source_file/named_source_file";
 
 /**
  * Represents an external package that rebundles other packages into one file.
@@ -21,7 +21,7 @@ export default class RebundledExternalPackage extends AbstractExternalPackage {
 	constructor(globalName, subglobals, commonInfo, file, plugins, externals = []) {
 		super("", globalName);
 		this._subglobals = subglobals;
-		this._sourceFile = new SourceFile(commonInfo, globalName, file, plugins, externals);
+		this._sourceFile = new NamedSourceFile(commonInfo, globalName, file, plugins, externals);
 	}
 
 	toConfigurationArray() {

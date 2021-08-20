@@ -1,6 +1,6 @@
 import AbstractExternalPackage from "./abstract_external_package";
 import CommonInfo from "./common_info";
-import Source from "./source_file/source_file";
+import NamedSourceFile from "./source_file/named_source_file";
 
 /**
  * Represents a builder which contains common information for configurations that will be created.
@@ -24,9 +24,9 @@ export default class CommonInfoBuilder {
 	 * @param {any} plugins Plugins that will be used to bundle the source file.
 	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
 	 *                                    not be included in the bundle.
-	 * @returns {Source} A representation of source.
+	 * @returns {NamedSourceFile} A representation of source.
 	 */
 	configure(name, file, plugins, externals = []) {
-		return new Source(this._commonInfo, name, file, plugins, externals);
+		return new NamedSourceFile(this._commonInfo, name, file, plugins, externals);
 	}
 }
