@@ -1,6 +1,6 @@
-import { LinkedExternalPackage } from "../../src";
+import { LinkedExternalPackage } from "../../../src";
 
-it("cannot be converted to configuration array", () => {
+it("can be converted to configuration array", () => {
 	const externalPackage = new LinkedExternalPackage("a", "b");
 
 	const configurations = externalPackage.toConfigurationArray();

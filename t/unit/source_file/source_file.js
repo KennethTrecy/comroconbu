@@ -1,5 +1,5 @@
-import { LinkedExternalPackage, SourceFile } from "../../src";
-import CommonInfo from "../../src/common_info";
+import { LinkedExternalPackage, SourceFile } from "../../../src";
+import CommonInfo from "../../../src/common_info";
 
 it("can become into configuration array without externals and plugins", () => {
 	const inputDirectory = "a";
