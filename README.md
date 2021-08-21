@@ -166,5 +166,21 @@ export default [
 ];
 ```
 
+### Other methods and classes
+Above examples showed how to use [`CommonInfoBuilder`](src/common_info_builder.js) and its methods
+`toConfigurationArray`, `linkExternalPackage`, `importExternalPackage`, and
+`rebundleExternalPackage`. There are also other methods namely:
+- `configureUnnamedSource`. Suitable when specifying unnamed source.
+- `configureSourceDirectory`. Suitable when specifying a collection of unnamed source files which
+  may have common plugin(s) and/or external package(s).
+
+Some of those methods may create an instance of one of the following classes:
+- [`NamedSourceFile`](src/source_file/named_source_file.js). Created by `configureNamedSource` method.
+- [`UnnamedSourceFile`](src/source_file/unnamed_source_file.js). Created by `configureUnamedSource` method.
+- [`SourceDirectory`](src/source_file/source_directory.js). Created by `configureSourceDirectory` method.
+- [`LinkedExternalPackage`](src/external_package/linked_external_package.js). Created by `linkExternalPackage` method.
+- [`ImportedExternalPackage`](src/external_package/imported_external_package.js). Created by `importExternalPackage` method.
+- [`RebundledExternalPackage`](src/external_package/rebundled_external_package.js). Created by `rebundleExternalPackage` method.
+
 ## Author
 Created by Kenneth Trecy Tobias.
