@@ -173,6 +173,7 @@ Above examples showed how to use [`CommonInfoBuilder`](src/common_info_builder.j
 - `configureUnnamedSource`. Suitable when specifying unnamed source.
 - `configureSourceDirectory`. Suitable when specifying a collection of unnamed source files which
   may have common plugin(s) and/or external package(s).
+- `getCommonInfo`. Returns common information used to create configurations of others.
 
 Some of those methods may create an instance of one of the following classes:
 - [`NamedSourceFile`](src/source_file/named_source_file.js). Created by `configureNamedSource`

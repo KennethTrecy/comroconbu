@@ -114,4 +114,13 @@ export default class CommonInfoBuilder {
 			externals
 		);
 	}
+
+	/**
+	 * Get the common information that used to create other configurations and link external
+	 * packages.
+	 * @returns {CommonInfo} The common info used to pass to other classes.
+	 */
+	getCommonInfo() {
+		return this._commonInfo;
+	}
 }
