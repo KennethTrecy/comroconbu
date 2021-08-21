@@ -54,5 +54,117 @@ export default [
 ];
 ```
 
+### Advance Configuration (with plugins and external packages)
+Example of `rollup.config.js` that imports `comcoronbu`:
+```
+import { CommonInfoBuilder } from "comcoronbu";
+import pluginA from "example-package-a";
+import pluginB from "example-package-b";
+
+const commonInfoBuilder = new CommonInfoBuilder("src", "dist", "iife");
+
+export default [
+   ...infoBuilder.configureNamedSource(
+      "index",
+      "index.js",
+      [
+         pluginA()
+      ],
+      [
+         // Put the external packages as fourth argument.
+
+         // Linked external packages are external packages linked by CDN in the document or by
+			// other means.
+         commonInfoBuilder.linkExternalPackage(
+            "library-a", // Package name used to import in the named source file
+            "$"         // Global identifier for the package
+         ),
+
+         // Imported external packages are external packages imported to a file yet it is not
+			// included in the source.
+         commonInfoBuilder.importExternalPackage(
+            "library-b", // Package name
+            "_",        // Global identifier for the package
+            "dependencies/library-b.js",   // Path to the file relative to the input directory
+            [
+               // Plugins for bundling the external package
+               pluginA(),
+               pluginB()
+            ],
+            [
+               // External packages for this external package
+            ]
+         )
+
+         // Rebundled external package is a compilation of other external packages.
+         commonInfoBuilder.rebundleExternalPackage(
+            "BundleC",  // Global identifier to access all external packages
+            {
+               // Name (key) and global identifier (value) of external packages
+               "framework-d": "frameworkD",
+               "library-e": "libraryE"
+            },
+            "dependencies/bundle-c.js",   // Path to the file that imports all external packages
+            [
+               // Put plugins here
+            ],
+            [
+               // You may put external packages that will not be included in the bundle.
+					// This argument is optional.
+            ]
+         )
+      ]
+   ).toConfigurationArray()
+];
+```
+
+The above configuration is the same as below:
+```
+import pluginA from "example-package-a";
+import pluginB from "example-package-b";
+
+export default [
+   {
+      "external": [ "library-a", "library-b", "framework-d", "library-e" ],
+      "input": "src/index.js",
+      "output": {
+         "file": "dist/index.js",
+         "format": "iife",
+         "globals": {
+            "library-a": "$",
+            "library-b": "_",
+            "framework-d": "BundleC.frameworkD",
+            "library-e": "BundleC.libraryE",
+         },
+         "interop": "esModule",
+         "name", "index"
+      },
+      "plugins": [
+         pluginA()
+      ]
+   }, {
+      "input": "src/dependencies/library-b.js",
+      "output": {
+         "file": "dist/dependencies/library-b.js",
+         "format": "iife",
+         "interop": "esModule",
+         "name", "_"
+      },
+      "plugins": [
+         pluginA(),
+         pluginB()
+      ]
+   }, {
+      "input": "src/dependencies/bundle-c.js",
+      "output": {
+         "file": "dist/dependencies/bundle-c.js",
+         "format": "iife",
+         "interop": "esModule",
+         "name": "BundleC"
+      }
+   }
+];
+```
+
 ## Author
 Created by Kenneth Trecy Tobias.
