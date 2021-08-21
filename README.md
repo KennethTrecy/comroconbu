@@ -74,14 +74,14 @@ export default [
          // Put the external packages as fourth argument.
 
          // Linked external packages are external packages linked by CDN in the document or by
-			// other means.
+         // other means.
          commonInfoBuilder.linkExternalPackage(
             "library-a", // Package name used to import in the named source file
             "$"         // Global identifier for the package
          ),
 
          // Imported external packages are external packages imported to a file yet it is not
-			// included in the source.
+         // included in the source.
          commonInfoBuilder.importExternalPackage(
             "library-b", // Package name
             "_",        // Global identifier for the package
@@ -110,7 +110,7 @@ export default [
             ],
             [
                // You may put external packages that will not be included in the bundle.
-					// This argument is optional.
+               // This argument is optional.
             ]
          )
       ]
@@ -175,19 +175,27 @@ Above examples showed how to use [`CommonInfoBuilder`](src/common_info_builder.j
   may have common plugin(s) and/or external package(s).
 
 Some of those methods may create an instance of one of the following classes:
-- [`NamedSourceFile`](src/source_file/named_source_file.js). Created by `configureNamedSource` method.
-- [`UnnamedSourceFile`](src/source_file/unnamed_source_file.js). Created by `configureUnamedSource` method.
-- [`SourceDirectory`](src/source_file/source_directory.js). Created by `configureSourceDirectory` method.
-- [`LinkedExternalPackage`](src/external_package/linked_external_package.js). Created by `linkExternalPackage` method.
-- [`ImportedExternalPackage`](src/external_package/imported_external_package.js). Created by `importExternalPackage` method.
-- [`RebundledExternalPackage`](src/external_package/rebundled_external_package.js). Created by `rebundleExternalPackage` method.
+- [`NamedSourceFile`](src/source_file/named_source_file.js). Created by `configureNamedSource`
+  method.
+- [`UnnamedSourceFile`](src/source_file/unnamed_source_file.js). Created by `configureUnamedSource`
+  method.
+- [`SourceDirectory`](src/source_file/source_directory.js). Created by `configureSourceDirectory`
+  method.
+- [`LinkedExternalPackage`](src/external_package/linked_external_package.js). Created by
+  `linkExternalPackage` method.
+- [`ImportedExternalPackage`](src/external_package/imported_external_package.js). Created by
+  `importExternalPackage` method.
+- [`RebundledExternalPackage`](src/external_package/rebundled_external_package.js). Created by
+  `rebundleExternalPackage` method.
 
 ## Assumptions
 There are following assumptions considered while building this library:
-- The path of input files and output files have almost the same path. The only difference is their root directory.
+- The path of input files and output files have almost the same path. The only difference is their
+  root directory.
 - Some modules may be linked to other separately-bundled modules.
 - Some external packages will be rebundled into one file.
-- The value of [`output.interop`](https://rollupjs.org/guide/en/#outputinterop) of every configuration is `esModule`.
+- The value of [`output.interop`](https://rollupjs.org/guide/en/#outputinterop) of every
+  configuration is `esModule`.
 
 ## Author
 Created by Kenneth Trecy Tobias.
