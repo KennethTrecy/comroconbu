@@ -182,5 +182,12 @@ Some of those methods may create an instance of one of the following classes:
 - [`ImportedExternalPackage`](src/external_package/imported_external_package.js). Created by `importExternalPackage` method.
 - [`RebundledExternalPackage`](src/external_package/rebundled_external_package.js). Created by `rebundleExternalPackage` method.
 
+## Assumptions
+There are following assumptions considered while building this library:
+- The path of input files and output files have almost the same path. The only difference is their root directory.
+- Some modules may be linked to other separately-bundled modules.
+- Some external packages will be rebundled into one file.
+- The value of [`output.interop`](https://rollupjs.org/guide/en/#outputinterop) of every configuration is `esModule`.
+
 ## Author
 Created by Kenneth Trecy Tobias.
