@@ -148,7 +148,7 @@ export default [
          "file": "dist/dependencies/library-b.js",
          "format": "iife",
          "interop": "esModule",
-         "name", "_"
+         "name": "_"
       },
       "plugins": [
          pluginA(),
