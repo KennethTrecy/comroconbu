@@ -11,9 +11,9 @@ npm install --save-dev git+http://repo.local/KennethTrecy/comroconbu#v0.1.1
 ## Usage Example
 
 ### Basic Configuration (without external packages)
-Example of `rollup.config.js` that imports `comcoronbu`:
+Example of `rollup.config.js` that imports `comroconbu`:
 ```
-import { CommonInfoBuilder } from "comcoronbu";
+import { CommonInfoBuilder } from "comroconbu";
 import pluginA from "example-package-a";
 
 const commonInfoBuilder = new CommonInfoBuilder(
@@ -55,9 +55,9 @@ export default [
 ```
 
 ### Advance Configuration (with plugins and external packages)
-Example of `rollup.config.js` that imports `comcoronbu`:
+Example of `rollup.config.js` that imports `comroconbu`:
 ```
-import { CommonInfoBuilder } from "comcoronbu";
+import { CommonInfoBuilder } from "comroconbu";
 import pluginA from "example-package-a";
 import pluginB from "example-package-b";
 
