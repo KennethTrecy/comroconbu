@@ -307,8 +307,10 @@ class SourceDirectory extends AbstractSourceFile {
 	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
 	 * @param {any[]} plugins Array of common plugins to bundle the source.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
+	 * @param {{(relativePath: string) => string}} renamer Function that accepts a relative path and
+	 *                                                     rename the output file necessarily.
 	 */
-	constructor(commonInfo, plugins, externals) {
+	constructor(commonInfo, plugins, externals, renamer) {
 		super();
 		this._sourceFiles = [];
 		this._externals = externals;
@@ -324,7 +326,12 @@ class SourceDirectory extends AbstractSourceFile {
 					const pathRelativeToCommonInputDirectory = completePath.slice(inputDirectory.length);
 					// Remove leading separator
 					const cleanPath = pathRelativeToCommonInputDirectory.slice(1);
-					const sourceFile = new UnnamedSourceFile(commonInfo, cleanPath, plugins, externals);
+					const renamedPath = renamer(cleanPath);
+					const sourceFile = new UnnamedSourceFile(
+						commonInfo,
+						renamedPath,
+						plugins,
+						externals);
 					this._sourceFiles.push(sourceFile);
 				} else {
 					directories.push(completePath);
@@ -399,8 +406,8 @@ class CommonInfoBuilder {
 	 *                                    source file.
 	 * @returns {SourceDirectory} A representation of source directory.
 	 */
-	configureSourceDirectory(plugins, externals = []) {
-		return new SourceDirectory(this._commonInfo, plugins, externals);
+	configureSourceDirectory(plugins, externals = [], renamer = relativePath => relativePath) {
+		return new SourceDirectory(this._commonInfo, plugins, externals, renamer);
 	}
 
 	/**
@@ -455,6 +462,15 @@ class CommonInfoBuilder {
 			plugins,
 			externals
 		);
+	}
+
+	/**
+	 * Get the common information that used to create other configurations and link external
+	 * packages.
+	 * @returns {CommonInfo} The common info used to pass to other classes.
+	 */
+	getCommonInfo() {
+		return this._commonInfo;
 	}
 }
 
