@@ -57,8 +57,8 @@ export default class CommonInfoBuilder {
 	 *                                    source file.
 	 * @returns {SourceDirectory} A representation of source directory.
 	 */
-	configureSourceDirectory(plugins, externals = []) {
-		return new SourceDirectory(this._commonInfo, plugins, externals);
+	configureSourceDirectory(plugins, externals = [], renamer = relativePath => relativePath) {
+		return new SourceDirectory(this._commonInfo, plugins, externals, renamer);
 	}
 
 	/**

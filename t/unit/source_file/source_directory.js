@@ -9,12 +9,14 @@ it("can scan directory", () => {
 	const outputFormat = "b";
 	const plugins = [];
 	const externals = [];
+	const renamer = path => path;
 	const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
 
 	const sourceDirectory = new SourceDirectory(
 		commonInfo,
 		plugins,
-		externals
+		externals,
+		renamer
 	);
 
 	expect(sourceDirectory._sourceFiles).toStrictEqual([
@@ -30,11 +32,13 @@ it("can become into configuration array without externals and plugins", () => {
 	const outputFormat = "d";
 	const plugins = [];
 	const externals = [];
+	const renamer = path => path;
 	const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
 	const sourceDirectory = new SourceDirectory(
 		commonInfo,
 		plugins,
-		externals
+		externals,
+		renamer
 	);
 
 	const configurationArray = sourceDirectory.toConfigurationArray();
@@ -86,10 +90,12 @@ it("can include external packages in configuration array", () => {
 			[]
 		)
 	];
+	const renamer = path => path;
 	const sourceDirectory = new SourceDirectory(
 		new CommonInfo(inputDirectoryA, outputDirectoryA, outputFormatA),
 		plugins,
-		externals
+		externals,
+		renamer
 	);
 
 	const configurationArray = sourceDirectory.toConfigurationArray();
@@ -111,9 +117,32 @@ it("can include external packages in configuration array", () => {
 			"output": {
 				"file": "h/l.js",
 				"format": "i",
-				"name": "k",
-				interop
+				interop,
+				"name": "k"
 			}
 		}
+	]);
+});
+
+it("can rename path", () => {
+	const inputDirectory = "t/dummy";
+	const outputDirectory = "m";
+	const outputFormat = "n";
+	const plugins = [];
+	const externals = [];
+	const renamer = path => `${path}.sample`;
+	const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
+
+	const sourceDirectory = new SourceDirectory(
+		commonInfo,
+		plugins,
+		externals,
+		renamer
+	);
+
+	expect(sourceDirectory._sourceFiles).toStrictEqual([
+		new UnnamedSourceFile(commonInfo, "a.js.sample", [], []),
+		new UnnamedSourceFile(commonInfo, "README.md.sample", [], []),
+		new UnnamedSourceFile(commonInfo, `b${sep}c.js.sample`, [], [])
 	]);
 });
