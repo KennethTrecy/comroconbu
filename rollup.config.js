@@ -1,6 +1,6 @@
 import { CommonInfoBuilder } from "./src/index";
 
-const infoBuilder = new CommonInfoBuilder("src", "dist", "es");
+const infoBuilder = new CommonInfoBuilder("src", "dist", "cjs");
 
 export default [
 	infoBuilder.configureNamedSource(
