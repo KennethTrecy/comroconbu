@@ -5,7 +5,7 @@ common patterns of configuration in my personal projects.
 ## Installation
 Run the following on your command line:
 ```
-npm install --save-dev git+http://repo.local/KennethTrecy/comroconbu#v0.1.1
+npm install --save-dev git+https://github.com/KennethTrecy/comroconbu#v0.2.0
 ```
 
 ## Usage Example
