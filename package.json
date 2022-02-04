@@ -2,6 +2,7 @@
   "name": "comroconbu",
   "version": "0.2.0-dev",
   "description": "Common Rollup configuration builder",
+  "homepage": "https://github.com/KennethTrecy/comroconbu",
   "license": "MIT",
   "main": "dist/index.js",
   "author": "Kenneth Trecy Tobias <web.kennethtobias@gmail.com>",
