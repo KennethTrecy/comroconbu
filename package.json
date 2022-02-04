@@ -2,9 +2,9 @@
   "name": "comroconbu",
   "version": "0.2.0-dev",
   "description": "Common Rollup configuration builder",
+  "license": "MIT",
   "main": "dist/index.js",
   "author": "Kenneth Trecy Tobias <web.kennethtobias@gmail.com>",
-  "private": true,
   "devDependencies": {
     "jest": "^27.0.6",
     "rollup": "^2.56.2",
