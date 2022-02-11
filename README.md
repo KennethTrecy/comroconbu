@@ -23,7 +23,7 @@ const commonInfoBuilder = new CommonInfoBuilder(
 );
 
 export default [
-   ...infoBuilder.configureNamedSource(
+   ...commonInfoBuilder.configureNamedSource(
       "index",    // Name of the source (Acts as the global identifier)
       "index.js", // Where to find the file relative to the input directory
       [
@@ -64,7 +64,7 @@ import pluginB from "example-package-b";
 const commonInfoBuilder = new CommonInfoBuilder("src", "dist", "iife");
 
 export default [
-   ...infoBuilder.configureNamedSource(
+   ...commonInfoBuilder.configureNamedSource(
       "index",
       "index.js",
       [
