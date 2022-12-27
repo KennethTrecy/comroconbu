@@ -12,7 +12,7 @@
 		"development": "npx rollup -c",
 		"watch": "npx rollup -c --watch",
 		"prod": "npm run production",
-		"production": "echo production bundler command here",
+		"production": "npx rollup -c",
 		"test:unit": "npx mocha src/**/*.spec.js src/*.spec.js",
 		"test:watch_unit": "npx mocha src/**/*.spec.js src/*.spec.js --watch"
 	},
