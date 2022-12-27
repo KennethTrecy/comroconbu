@@ -13,6 +13,7 @@ ENV CHOKIDAR_USEPOLLING=true
 WORKDIR /var/www/html/app
 
 COPY ./package.json ./package.json
+COPY ./.babelrc ./.babelrc
 
 RUN npm install
 
