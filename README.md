@@ -2,11 +2,6 @@
 Builds configuration that can be used by [Rollup]. It will be based from
 common patterns of configuration in my personal projects.
 
-## Origin
-Some parts of the repository was based from [`docker_js-mocha`] branch of [Web Template].
-
-The template is specialized for front-end development.
-
 ## Installation
 Run the following on your command line:
 ```
@@ -188,8 +183,13 @@ Some of those methods may create an instance of one of the following classes:
 - [`ImportedExternalPackage`]. Created by `importExternalPackage` method.
 - [`RebundledExternalPackage`]. Created by `rebundleExternalPackage` method.
 
+## Origin
+Some parts of the repository was based from [`docker_js-mocha`] branch of [Web Template].
+
+The template is specialized for front-end development.
+
 ## Development
-The following are instructions to start contributing in the project.
+These are the following instructions to start contributing in the project.
 
 ### Initialization
 This repository should be initialized to adhere in [Conventional Commits specification] for organize
@@ -225,12 +225,6 @@ There are following assumptions considered while building this library:
 - The value of [`output.interop`] of every configuration is `esModule`.
 
 ## Notes
-It is optional to attribute this repository in other template/projects.
-
-### Branch
-This branch can be used to other branches, templates, or projects.
-
-Testing framework and other necessary packages were already installed in this branch.
 
 ### Want to contribute?
 Read the [contributing guide] for different ways to contribute in the project.
