@@ -8,8 +8,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.10"
-          memory: 25M
+          cpus: "0.20"
+          memory: 50M
     restart: on-failure
     volumes:
       - .:/var/www/html/app
