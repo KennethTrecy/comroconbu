@@ -24,8 +24,8 @@ describe("Source directory", () => {
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, "a.js", [], []),
 			new UnnamedSourceFile(commonInfo, "README.md", [], []),
+			new UnnamedSourceFile(commonInfo, "a.js", [], []),
 			new UnnamedSourceFile(commonInfo, `b${sep}c.js`, [], [])
 		])
 	})
@@ -49,16 +49,16 @@ describe("Source directory", () => {
 
 		expect(configurationArray).to.deep.equal([
 			{
-				"input": "t/dummy/a.js",
+				"input": "t/dummy/README.md",
 				"output": {
-					"file": "c/a.js",
+					"file": "c/README.md",
 					"format": "d",
 					interop
 				}
 			}, {
-				"input": "t/dummy/README.md",
+				"input": "t/dummy/a.js",
 				"output": {
-					"file": "c/README.md",
+					"file": "c/a.js",
 					"format": "d",
 					interop
 				}
@@ -145,8 +145,8 @@ describe("Source directory", () => {
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, "a.js.sample", [], []),
 			new UnnamedSourceFile(commonInfo, "README.md.sample", [], []),
+			new UnnamedSourceFile(commonInfo, "a.js.sample", [], []),
 			new UnnamedSourceFile(commonInfo, `b${sep}c.js.sample`, [], [])
 		])
 	})
