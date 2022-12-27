@@ -1,6 +1,17 @@
 {
 	"compilerOptions": {
 		"allowJs": true,
-		"module": "ES2020"
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ES2020",
+		"moduleResolution": "node",
+		"removeComments": false,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "ES2016"
 	}
 }
