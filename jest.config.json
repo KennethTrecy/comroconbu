@@ -1,0 +1,9 @@
+{
+	"transform": {
+		"^.+\\.js$": "rollup-jest"
+	},
+
+	"testEnvironment": "node",
+
+	"testRegex": "t/unit/.*\\.js"
+}
