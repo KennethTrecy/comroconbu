@@ -9,8 +9,8 @@
 	"scripts": {
 		"prepare": "husky install",
 		"dev": "npm run development",
-		"development": "echo development bundler command here",
-		"watch": "echo watched development bundler command here",
+		"development": "npx rollup -c",
+		"watch": "npx rollup -c --watch",
 		"prod": "npm run production",
 		"production": "echo production bundler command here",
 		"test:unit": "npx mocha src/**/*.spec.js",
