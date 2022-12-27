@@ -1,9 +1,9 @@
-var { expect } = require("chai");
+const { expect } = require("chai")
 
-describe("Operation", function() {
-	describe("Addition", function() {
-		it("should return 2", function() {
-			expect(1+1).to.equal(2);
-		});
-	});
-});
+describe("Operation", () => {
+	describe("Addition", () => {
+		it("should return 2", () => {
+			expect(1 + 1).to.equal(2)
+		})
+	})
+})
