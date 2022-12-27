@@ -14,7 +14,7 @@
 		"prod": "npm run production",
 		"production": "echo production bundler command here",
 		"test:unit": "npx mocha src/**/*.spec.js",
-		"test:watch_unit": "npx mocha src/**/*.spec.js --watch --watch-files src/**/*.spec.js"
+		"test:watch_unit": "npx mocha src/**/*.spec.js --watch"
 	},
 	"author": "Kenneth Trecy Tobias <web.kennethtobias@gmail.com>",
 	"devDependencies": {
