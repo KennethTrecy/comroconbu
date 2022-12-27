@@ -17,7 +17,8 @@ export default class SourceDirectory extends AbstractSourceFile {
 	/**
 	 * Creates a representation of collection of files.
 	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
-	 * @param {any[]} plugins Array of common plugins to bundle the source.
+	 * @param {any[]|((input, output) => any[])} plugins Array of common plugins to bundle the
+	 *                                                   source.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
 	 * @param {{(relativePath: string) => string}} renamer Function that accepts a relative path and
 	 *                                                     rename the output file necessarily.
@@ -42,7 +43,9 @@ export default class SourceDirectory extends AbstractSourceFile {
 					const sourceFile = new UnnamedSourceFile(
 						commonInfo,
 						renamedPath,
-						plugins,
+						typeof plugins === "function"
+							? plugins(commonInfo.inputDirectory, commonInfo.outputDirectory)
+							: plugins,
 						externals)
 					this._sourceFiles.push(sourceFile)
 				} else {
