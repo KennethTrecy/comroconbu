@@ -8,6 +8,6 @@ describe("Linked external package", () => {
 
 		const configurations = externalPackage.toConfigurationArray()
 
-		expect(configurations).toEqual([])
+		expect(configurations).to.deep.equal([])
 	})
 })
