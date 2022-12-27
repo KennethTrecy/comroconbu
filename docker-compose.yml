@@ -13,6 +13,7 @@ services:
     restart: on-failure
     volumes:
       - .:/var/www/html/app
+      - .git/:/var/www/html/.git
       - contained_node_modules:/var/www/html/app/node_modules
     tty: true
     stdin_open: false
