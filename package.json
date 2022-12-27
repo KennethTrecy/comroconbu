@@ -18,6 +18,9 @@
 	},
 	"author": "Kenneth Trecy Tobias <web.kennethtobias@gmail.com>",
 	"devDependencies": {
+		"@babel/core": "^7.20.7",
+		"@babel/preset-env": "^7.20.2",
+		"@babel/register": "^7.18.9",
 		"@commitlint/cli": "^17.3.0",
 		"@commitlint/config-conventional": "^17.3.0",
 		"chai": "^4.3.7",
