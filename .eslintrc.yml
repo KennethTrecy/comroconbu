@@ -73,6 +73,7 @@ rules:
   one-var: [ "error", "never" ]
   operator-linebreak: [ "error", "before" ]
   prefer-named-capture-group: "warn"
+  semi: [ "error", "never" ]
   space-before-function-paren: [ "error", "never" ]
   sort-imports:
     - "error"
