@@ -13,8 +13,8 @@
 		"watch": "npx rollup -c --watch",
 		"prod": "npm run production",
 		"production": "echo production bundler command here",
-		"test:unit": "npx mocha src/**/*.spec.js",
-		"test:watch_unit": "npx mocha src/**/*.spec.js --watch"
+		"test:unit": "npx mocha src/**/*.spec.js src/*.spec.js",
+		"test:watch_unit": "npx mocha src/**/*.spec.js src/*.spec.js --watch"
 	},
 	"author": "Kenneth Trecy Tobias <web.kennethtobias@gmail.com>",
 	"devDependencies": {
