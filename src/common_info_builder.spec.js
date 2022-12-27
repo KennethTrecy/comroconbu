@@ -16,7 +16,7 @@ describe("Common info", () => {
 
 		const source = builder.configureNamedSource(name, file, plugins, externals)
 
-		expect(source).to.equal(new NamedSourceFile(
+		expect(source).to.deep.equal(new NamedSourceFile(
 			new CommonInfo(inputDirectory, outputDirectory, outputFormat),
 			name,
 			file,
