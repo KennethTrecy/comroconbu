@@ -1,9 +1,12 @@
-import { lstatSync, readdirSync } from "fs";
-import AbstractExternalPackage from "../abstract_external_package";
-import AbstractSourceFile from "../abstract_source_file";
-import CommonInfo from "../common_info";
-import UnnamedSourceFile from "./unnamed_source_file";
-import { join } from "path";
+import { join } from "path"
+import { lstatSync, readdirSync } from "fs"
+
+// eslint-disable-next-line no-unused-vars
+import AbstractExternalPackage from "../abstract_external_package"
+import AbstractSourceFile from "../abstract_source_file"
+// eslint-disable-next-line no-unused-vars
+import CommonInfo from "../common_info"
+import UnnamedSourceFile from "./unnamed_source_file"
 
 /**
  * Represent a collection source files within the directory.
@@ -20,47 +23,47 @@ export default class SourceDirectory extends AbstractSourceFile {
 	 *                                                     rename the output file necessarily.
 	 */
 	constructor(commonInfo, plugins, externals, renamer) {
-		super();
-		this._sourceFiles = [];
-		this._externals = externals;
+		super()
+		this._sourceFiles = []
+		this._externals = externals
 
-		const { inputDirectory } = commonInfo;
-		const directories = [ inputDirectory ];
+		const { inputDirectory } = commonInfo
+		const directories = [ inputDirectory ]
 		while (directories.length > 0) {
-			const currentDirectory = directories.shift();
+			const currentDirectory = directories.shift()
 
 			readdirSync(currentDirectory).forEach(relativePath => {
-				const completePath = join(currentDirectory, relativePath);
+				const completePath = join(currentDirectory, relativePath)
 				if (lstatSync(completePath).isFile()) {
-					const pathRelativeToCommonInputDirectory = completePath.slice(inputDirectory.length);
+					const pathRelativeToCommonInputDirectory = completePath.slice(inputDirectory.length)
 					// Remove leading separator
-					const cleanPath = pathRelativeToCommonInputDirectory.slice(1);
-					const renamedPath = renamer(cleanPath);
+					const cleanPath = pathRelativeToCommonInputDirectory.slice(1)
+					const renamedPath = renamer(cleanPath)
 					const sourceFile = new UnnamedSourceFile(
 						commonInfo,
 						renamedPath,
 						plugins,
-						externals);
-					this._sourceFiles.push(sourceFile);
+						externals)
+					this._sourceFiles.push(sourceFile)
 				} else {
-					directories.push(completePath);
+					directories.push(completePath)
 				}
-			});
+			})
 		}
 	}
 
 	toConfigurationArray() {
-		const configurations = [];
+		const configurations = []
 
 		for (const sourceFile of this._sourceFiles) {
-			const configuration = sourceFile.toOwnConfiguration();
-			configurations.push(configuration);
+			const configuration = sourceFile.toOwnConfiguration()
+			configurations.push(configuration)
 		}
 
 		for (const externalPackage of this._externals) {
-			configurations.push(...externalPackage.toConfigurationArray());
+			configurations.push(...externalPackage.toConfigurationArray())
 		}
 
-		return configurations;
+		return configurations
 	}
 }
