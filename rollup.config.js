@@ -4,15 +4,10 @@ import esbuild from "rollup-plugin-esbuild-transform"
 const infoBuilder = new CommonInfoBuilder("src", "dist", "cjs")
 
 export default [
-	{
-		"input": "src/index.ts",
-		"output": {
-			"file": "dist/index.js",
-			"format": "esm",
-			"interop": "auto",
-			"name": "comroconbu"
-		},
-		"plugins": [
+	infoBuilder.configureNamedSource(
+		"comcoronbu",
+		"index.js",
+		[
 			esbuild([
 				{
 					"loader": "ts",
@@ -23,6 +18,10 @@ export default [
 					"output": true
 				}
 			])
+		],
+		[
+			infoBuilder.linkExternalPackage("fs", "fs"),
+			infoBuilder.linkExternalPackage("path", "path")
 		]
-	}
+	).toOwnConfiguration()
 ]
