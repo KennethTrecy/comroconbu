@@ -22,10 +22,12 @@
 		"@commitlint/config-conventional": "^17.3.0",
 		"chai": "^4.3.7",
 		"changelogen": "^0.4.0",
+		"esbuild": "^0.16.11",
 		"husky": "^8.0.0",
-		"mocha": "^10.2.0",
 		"jest": "^27.0.6",
+		"mocha": "^10.2.0",
+		"rollup": "^2.56.2",
 		"rollup-jest": "^1.1.2",
-		"rollup": "^2.56.2"
+		"rollup-plugin-esbuild-transform": "^1.5.0"
 	}
 }
