@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { sep } from "path"
 import { expect } from "chai"
 
 import CommonInfo from "../common_info"
@@ -27,9 +28,9 @@ describe("Unnamed source file", () => {
 		const configurations = sourceFile.toConfigurationArray()
 
 		expect(configurations).to.deep.equal([ {
-			"input": "a/d.js",
+			"input": `a${sep}d.js`,
 			"output": {
-				"file": "b/d.js",
+				"file": `b${sep}d.js`,
 				"format": "c",
 				interop
 			}
@@ -53,9 +54,9 @@ describe("Unnamed source file", () => {
 		const configurations = sourceFile.toConfigurationArray()
 
 		expect(configurations).to.deep.equal([ {
-			"input": "e/h.js",
+			"input": `e${sep}h.js`,
 			"output": {
-				"file": "f/h.js",
+				"file": `f${sep}h.js`,
 				"format": "g",
 				interop
 			},
@@ -85,9 +86,9 @@ describe("Unnamed source file", () => {
 
 		expect(configurations).to.deep.equal([ {
 			"external": [ "m" ],
-			"input": "i/l.js",
+			"input": `i${sep}l.js`,
 			"output": {
-				"file": "j/l.js",
+				"file": `j${sep}l.js`,
 				"format": "k",
 				"globals": {
 					"m": "n"
@@ -115,9 +116,9 @@ describe("Unnamed source file", () => {
 		const configurations = sourceFile.toConfigurationArray()
 
 		expect(configurations).to.deep.equal([ {
-			"input": "o/r.js",
+			"input": `o${sep}r.js`,
 			"output": {
-				"file": "p/r.js",
+				"file": `p${sep}r.js`,
 				"format": "q",
 				interop
 			}
@@ -149,9 +150,9 @@ describe("Unnamed source file", () => {
 		expect(configurations).to.deep.equal([
 			{
 				"external": [ "w" ],
-				"input": "s/v.js",
+				"input": `s${sep}v.js`,
 				"output": {
-					"file": "t/v.js",
+					"file": `t${sep}v.js`,
 					"format": "u",
 					"globals": {
 						"w": "x"
@@ -159,9 +160,9 @@ describe("Unnamed source file", () => {
 					interop
 				}
 			}, {
-				"input": "s/y.js",
+				"input": `s${sep}y.js`,
 				"output": {
-					"file": "t/y.js",
+					"file": `t${sep}y.js`,
 					"format": "u",
 					interop,
 					"name": "x"
@@ -189,7 +190,7 @@ describe("Unnamed source file", () => {
 		expect(configurations).to.deep.equal([ {
 			"input": "ab.js",
 			"output": {
-				"file": "z/ab.js",
+				"file": `z${sep}ab.js`,
 				"format": "aa",
 				interop
 			}
