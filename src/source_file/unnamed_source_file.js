@@ -1,6 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import AbstractExternalPackage from "../abstract_external_package"
 import AbstractSourceFile from "../abstract_source_file"
+// eslint-disable-next-line no-unused-vars
 import CommonInfo from "../common_info"
+import RelativePathPair from "./relative_path_pair"
 import interop from "../interop"
 
 /**
@@ -10,8 +13,11 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	/**
 	 * Creates a representation of source file.
 	 * @param {CommonInfo} commonInfo Common information for sources.
-	 * @param {string} file The path of the source file to be bundled relative to the
-	 *                      `inputDirectory` of `CommonInfoBuilder` class.
+	 * @param {string|RelativePathPair} file The relative path of the source and bundled file which
+	 *                                       are both relative to the `inputDirectory` and
+	 *                                       `outputDirectory` of `CommonInfoBuilder` class. It can
+	 *                                       be also a relative path pair which may have two
+	 *                                       different directories.
 	 * @param {any} plugins Plugins that will be used to bundle the source file.
 	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
 	 *                                    not be included in the bundle.
@@ -61,12 +67,11 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	}
 
 	_convertIntoBasicConfiguration() {
-		function appendSlashNecessarily(string) {
-			if (string === "") return string
-			return `${string}/`
-		}
-		const input = `${appendSlashNecessarily(this._commonInfo.inputDirectory)}${this._file}`
-		const file = `${appendSlashNecessarily(this._commonInfo.outputDirectory)}${this._file}`
+		const pathPair = this._file instanceof RelativePathPair
+			? this._file
+			: new RelativePathPair(this._commonInfo, this._file, this._file)
+		const input = pathPair.completeInputPath
+		const file = pathPair.completeOutputPath
 		const format = this._commonInfo.outputFormat
 
 		const configuration = {
