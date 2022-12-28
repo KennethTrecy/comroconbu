@@ -1,7 +1,7 @@
-import AbstractExternalPackage from "../abstract_external_package";
-import AbstractSourceFile from "../abstract_source_file";
-import CommonInfo from "../common_info";
-import interop from "../interop";
+import AbstractExternalPackage from "../abstract_external_package"
+import AbstractSourceFile from "../abstract_source_file"
+import CommonInfo from "../common_info"
+import interop from "../interop"
 
 /**
  * Represents an module file.
@@ -17,11 +17,11 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	 *                                    not be included in the bundle.
 	 */
 	constructor(commonInfo, file, plugins, externals = []) {
-		super();
-		this._commonInfo = commonInfo;
-		this._file = file;
-		this._plugins = plugins;
-		this._externals = externals;
+		super()
+		this._commonInfo = commonInfo
+		this._file = file
+		this._plugins = plugins
+		this._externals = externals
 	}
 
 	/**
@@ -43,31 +43,31 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	 * }} An object configuration. Note that `output.globals` and `external` are optional.
 	 */
 	toOwnConfiguration() {
-		const configuration = this._convertIntoFullConfiguration();
+		const configuration = this._convertIntoFullConfiguration()
 
-		return configuration;
+		return configuration
 	}
 
 	toConfigurationArray() {
-		const configurations = [];
+		const configurations = []
 
 		const configuration = this._convertIntoFullConfiguration(externalPackage => {
-			configurations.push(...externalPackage.toConfigurationArray());
-		});
+			configurations.push(...externalPackage.toConfigurationArray())
+		})
 
-		configurations.unshift(configuration);
+		configurations.unshift(configuration)
 
-		return configurations;
+		return configurations
 	}
 
 	_convertIntoBasicConfiguration() {
 		function appendSlashNecessarily(string) {
-			if (string === "") return string;
-			return `${string}/`;
+			if (string === "") return string
+			return `${string}/`
 		}
-		const input = `${appendSlashNecessarily(this._commonInfo.inputDirectory)}${this._file}`;
-		const file = `${appendSlashNecessarily(this._commonInfo.outputDirectory)}${this._file}`;
-		const format = this._commonInfo.outputFormat;
+		const input = `${appendSlashNecessarily(this._commonInfo.inputDirectory)}${this._file}`
+		const file = `${appendSlashNecessarily(this._commonInfo.outputDirectory)}${this._file}`
+		const format = this._commonInfo.outputFormat
 
 		const configuration = {
 			input,
@@ -76,37 +76,37 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 				format,
 				interop
 			}
-		};
+		}
 
-		return configuration;
+		return configuration
 	}
 
 	_convertIntoFullConfiguration(externalPackageProcessor = null) {
-		const configuration = this._convertIntoBasicConfiguration();
+		const configuration = this._convertIntoBasicConfiguration()
 
-		const plugins = this._plugins;
+		const plugins = this._plugins
 
 		if (plugins.length > 0) {
-			configuration.plugins = plugins;
+			configuration.plugins = plugins
 		}
 
-		const external = [];
-		const globals = {};
+		const external = []
+		const globals = {}
 
 		for (const externalPackage of this._externals) {
-			const exposedGlobals = externalPackage.getGlobals();
+			const exposedGlobals = externalPackage.getGlobals()
 
 			for (const [ packageName, globalIdentifier ] of Object.entries(exposedGlobals)) {
-				external.push(packageName);
-				globals[packageName] = globalIdentifier;
+				external.push(packageName)
+				globals[packageName] = globalIdentifier
 			}
 
-			if (externalPackageProcessor !== null) externalPackageProcessor(externalPackage);
+			if (externalPackageProcessor !== null) externalPackageProcessor(externalPackage)
 		}
 
-		if (external.length > 0) configuration.external = external;
-		if (Object.values(globals).length > 0) configuration.output.globals = globals;
+		if (external.length > 0) configuration.external = external
+		if (Object.values(globals).length > 0) configuration.output.globals = globals
 
-		return configuration;
+		return configuration
 	}
 }
