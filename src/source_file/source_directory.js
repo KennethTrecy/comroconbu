@@ -20,10 +20,11 @@ export default class SourceDirectory extends AbstractSourceFile {
 	 * @param {any[]|((input, output) => any[])} plugins Array of common plugins to bundle the
 	 *                                                   source.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
-	 * @param {{(relativePath: string) => string}} renamer Function that accepts a relative path and
-	 *                                                     rename the output file necessarily.
+	 * @param {{(relativePath: string) => string}} outputPathRenamer Function that accepts a relative
+	 *                                                               path and rename the output file
+	 *                                                               necessarily.
 	 */
-	constructor(commonInfo, plugins, externals, renamer) {
+	constructor(commonInfo, plugins, externals, outputPathRenamer) {
 		super()
 		this._sourceFiles = []
 		this._externals = externals
@@ -39,7 +40,7 @@ export default class SourceDirectory extends AbstractSourceFile {
 					const pathRelativeToCommonInputDirectory = completePath.slice(inputDirectory.length)
 					// Remove leading separator
 					const cleanPath = pathRelativeToCommonInputDirectory.slice(1)
-					const renamedPath = renamer(cleanPath)
+					const renamedPath = outputPathRenamer(cleanPath)
 					const sourceFile = new UnnamedSourceFile(
 						commonInfo,
 						renamedPath,
