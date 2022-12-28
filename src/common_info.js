@@ -9,8 +9,8 @@ export default class CommonInfo {
 	 * @param {string} outputFormat Output format for bundled files.
 	 */
 	constructor(inputDirectory, outputDirectory, outputFormat) {
-		this.inputDirectory = inputDirectory;
-		this.outputDirectory = outputDirectory;
-		this.outputFormat = outputFormat;
+		this.inputDirectory = inputDirectory
+		this.outputDirectory = outputDirectory
+		this.outputFormat = outputFormat
 	}
 }
