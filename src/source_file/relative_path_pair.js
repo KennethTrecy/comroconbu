@@ -50,6 +50,6 @@ export default class RelativePathPair {
 	 * Gets the output path joined with output directory.
 	 */
 	get completeOutputPath() {
-		return join(this._commonInfo.OutputDirectory, this.originalRelativeOutputPath)
+		return join(this._commonInfo.outputDirectory, this.originalRelativeOutputPath)
 	}
 }
