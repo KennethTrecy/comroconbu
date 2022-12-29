@@ -155,9 +155,9 @@ describe("Source directory", () => {
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("README.md.sample"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("a.js.sample"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build(`b${sep}c.js.sample`), [], [])
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("README.md"), [], []),
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("a.js"), [], []),
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build(`b${sep}c.js`), [], [])
 		])
 	})
 })
