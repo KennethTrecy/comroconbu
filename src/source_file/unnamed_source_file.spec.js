@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 /* eslint-disable max-lines-per-function */
-import { sep } from "path"
+import { sep } from "node:path"
 
 import { expect } from "chai"
 

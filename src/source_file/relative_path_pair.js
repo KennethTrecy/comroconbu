@@ -1,4 +1,4 @@
-import { join } from "path"
+import { join } from "node:path"
 
 // eslint-disable-next-line no-unused-vars
 import CommonInfo from "../common_info"

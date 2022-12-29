@@ -8,8 +8,8 @@ export default [
 		"index.js",
 		[],
 		[
-			infoBuilder.linkExternalPackage("fs", "fs"),
-			infoBuilder.linkExternalPackage("path", "path")
+			infoBuilder.linkExternalPackage("node:fs", "node:fs"),
+			infoBuilder.linkExternalPackage("node:path", "node:path")
 		]
 	).toOwnConfiguration()
 ];

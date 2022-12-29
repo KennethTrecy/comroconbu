@@ -18,7 +18,7 @@ export default class UnnamedSourceFile extends AbstractSourceFile {
 	 *                                       `outputDirectory` of `CommonInfoBuilder` class. It can
 	 *                                       be also a relative path pair which may have two
 	 *                                       different directories.
-	 * @param {any} plugins Plugins that will be used to bundle the source file.
+	 * @param {any[]} plugins Plugins that will be used to bundle the source file.
 	 * @param {AbstractExternalPackage[]} externals Optional. Array of external packages that will
 	 *                                    not be included in the bundle.
 	 */
