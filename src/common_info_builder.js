@@ -1,11 +1,13 @@
-import AbstractExternalPackage from "./abstract_external_package";
-import CommonInfo from "./common_info";
-import ImportedExternalPackage from "./external_package/imported_external_package";
-import LinkedExternalPackage from "./external_package/linked_external_package";
-import NamedSourceFile from "./source_file/named_source_file";
-import RebundledExternalPackage from "./external_package/rebundled_external_package";
-import SourceDirectory from "./source_file/source_directory";
-import UnnamedSourceFile from "./source_file/unnamed_source_file";
+// eslint-disable-next-line no-unused-vars
+import AbstractExternalPackage from "./abstract_external_package"
+import CommonInfo from "./common_info"
+import ImportedExternalPackage from "./external_package/imported_external_package"
+import LinkedExternalPackage from "./external_package/linked_external_package"
+import NamedSourceFile from "./source_file/named_source_file"
+import RebundledExternalPackage from "./external_package/rebundled_external_package"
+import RelativePathPairBuilder from "./source_file/relative_path_pair_builder"
+import SourceDirectory from "./source_file/source_directory"
+import UnnamedSourceFile from "./source_file/unnamed_source_file"
 
 /**
  * Represents a builder which contains common information for configurations that will be created.
@@ -18,7 +20,7 @@ export default class CommonInfoBuilder {
 	 * @param {string} outputFormat Output format for bundled files.
 	 */
 	constructor(inputDirectory, outputDirectory, outputFormat) {
-		this._commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat);
+		this._commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
 	}
 
 	/**
@@ -32,7 +34,7 @@ export default class CommonInfoBuilder {
 	 * @returns {NamedSourceFile} A representation of named source file.
 	 */
 	configureNamedSource(name, file, plugins, externals = []) {
-		return new NamedSourceFile(this._commonInfo, name, file, plugins, externals);
+		return new NamedSourceFile(this._commonInfo, name, file, plugins, externals)
 	}
 
 	/**
@@ -45,20 +47,27 @@ export default class CommonInfoBuilder {
 	 * @returns {UnnamedSourceFile} A representation of unnamed source files.
 	 */
 	configureUnnamedSource(file, plugins, externals = []) {
-		return new UnnamedSourceFile(this._commonInfo, file, plugins, externals);
+		return new UnnamedSourceFile(this._commonInfo, file, plugins, externals)
 	}
 
 	/**
 	 * Creates a representation of source directory.
-	 * @param {any[]} plugins Common plugins to be applied to the source files found in the input
-	 *                      directory.
+	 * @param {any[]|((RelativePathPair) => any[])} plugins Common plugins to be applied to the
+	 *                                                      source files found in the input directory
+	 *                                                      or a function that recieves a path pair
+	 *                                                      and outputs an array of plugins.
 	 * @param {AbstractExternalPackage[]} [externals=[]] Optional. Array of common external packages
 	 *                                    that will not be included in the configuration of each
 	 *                                    source file.
+	 * @param {RelativePathPairBuilder} pathPairBuilder Builder instance to create relative paths.
 	 * @returns {SourceDirectory} A representation of source directory.
 	 */
-	configureSourceDirectory(plugins, externals = [], renamer = relativePath => relativePath) {
-		return new SourceDirectory(this._commonInfo, plugins, externals, renamer);
+	configureSourceDirectory(
+		plugins,
+		externals = [],
+		pathPairBuilder = new RelativePathPairBuilder()
+	) {
+		return new SourceDirectory(this._commonInfo, plugins, externals, pathPairBuilder)
 	}
 
 	/**
@@ -79,7 +88,7 @@ export default class CommonInfoBuilder {
 			file,
 			plugins,
 			externals
-		);
+		)
 	}
 
 	/**
@@ -89,7 +98,7 @@ export default class CommonInfoBuilder {
 	 * @returns {LinkedExternalPackage} A representation of linked external package.
 	 */
 	linkExternalPackage(externalName, globalName) {
-		return new LinkedExternalPackage(externalName, globalName);
+		return new LinkedExternalPackage(externalName, globalName)
 	}
 
 	/**
@@ -112,7 +121,7 @@ export default class CommonInfoBuilder {
 			file,
 			plugins,
 			externals
-		);
+		)
 	}
 
 	/**
@@ -120,7 +129,7 @@ export default class CommonInfoBuilder {
 	 * packages.
 	 * @returns {CommonInfo} The common info used to pass to other classes.
 	 */
-	getCommonInfo() {
-		return this._commonInfo;
+	get commonInfo() {
+		return this._commonInfo
 	}
 }
