@@ -1,11 +1,13 @@
-import { join } from "path"
-import { lstatSync, readdirSync } from "fs"
+import { readdirSync } from "node:fs"
 
 // eslint-disable-next-line no-unused-vars
 import AbstractExternalPackage from "../abstract_external_package"
 import AbstractSourceFile from "../abstract_source_file"
 // eslint-disable-next-line no-unused-vars
 import CommonInfo from "../common_info"
+import RelativePathPair from "./relative_path_pair"
+// eslint-disable-next-line no-unused-vars
+import RelativePathPairBuilder from "./relative_path_pair_builder"
 import UnnamedSourceFile from "./unnamed_source_file"
 
 /**
@@ -17,14 +19,13 @@ export default class SourceDirectory extends AbstractSourceFile {
 	/**
 	 * Creates a representation of collection of files.
 	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
-	 * @param {any[]|((input, output) => any[])} plugins Array of common plugins to bundle the
-	 *                                                   source.
+	 * @param {any[]|((RelativePathPair) => any[])} plugins Array of common plugins to bundle the
+	 *                                                      source or function that receives the
+	 *                                                      relative path pair from builder.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
-	 * @param {{(relativePath: string) => string}} outputPathRenamer Function that accepts a relative
-	 *                                                               path and rename the output file
-	 *                                                               necessarily.
+	 * @param {RelativePathPairBuilder} pathPairBuilder Class to create relative paths.
 	 */
-	constructor(commonInfo, plugins, externals, outputPathRenamer) {
+	constructor(commonInfo, plugins, externals, pathPairBuilder) {
 		super()
 		this._sourceFiles = []
 		this._externals = externals
@@ -34,23 +35,21 @@ export default class SourceDirectory extends AbstractSourceFile {
 		while (directories.length > 0) {
 			const currentDirectory = directories.shift()
 
-			readdirSync(currentDirectory).forEach(relativePath => {
-				const completePath = join(currentDirectory, relativePath)
-				if (lstatSync(completePath).isFile()) {
-					const pathRelativeToCommonInputDirectory = completePath.slice(inputDirectory.length)
-					// Remove leading separator
-					const cleanPath = pathRelativeToCommonInputDirectory.slice(1)
-					const renamedPath = outputPathRenamer(cleanPath)
+			readdirSync(currentDirectory, { "withFileTypes": true }).forEach(relativePath => {
+				const { name } = relativePath
+				const rawPathPair = new RelativePathPair(commonInfo, name, name)
+				if (relativePath.isFile()) {
+					const pathPair = pathPairBuilder.build(name, name)
 					const sourceFile = new UnnamedSourceFile(
 						commonInfo,
-						renamedPath,
+						pathPair,
 						typeof plugins === "function"
-							? plugins(commonInfo.inputDirectory, commonInfo.outputDirectory)
+							? plugins(pathPair)
 							: plugins,
 						externals)
 					this._sourceFiles.push(sourceFile)
 				} else {
-					directories.push(completePath)
+					directories.push(rawPathPair.completeInputPath)
 				}
 			})
 		}
