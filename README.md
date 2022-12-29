@@ -1,5 +1,14 @@
+[![Web Front-end Tests](https://img.shields.io/github/actions/workflow/status/KennethTrecy/comroconbu/front-end.yml?style=for-the-badge)](https://github.com/KennethTrecy/comroconbu/actions/workflows/front-end.yml)
+![GitHub lines](https://img.shields.io/github/license/KennethTrecy/comroconbu?style=for-the-badge)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/KennethTrecy/comroconbu?style=for-the-badge&display_name=tag&sort=semver)
+![GitHub closed issues count](https://img.shields.io/github/issues-closed/KennethTrecy/comroconbu?style=for-the-badge)
+![GitHub pull request count](https://img.shields.io/github/issues-pr-closed/KennethTrecy/comroconbu?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/KennethTrecy/comroconbu?style=for-the-badge)
+![Lines of code](https://img.shields.io/tokei/lines/github/KennethTrecy/comroconbu?style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/repo-size/KennethTrecy/comroconbu?style=for-the-badge)
+![GitHub top language](https://img.shields.io/github/languages/top/KennethTrecy/comroconbu?style=for-the-badge)
 # Comroconbu
-Builds configuration that can be used by [Rollup]. It will be based from
+> Builds configuration that can be used by [Rollup]. It will be based from
 common patterns of configuration in my personal projects.
 
 ## Installation
