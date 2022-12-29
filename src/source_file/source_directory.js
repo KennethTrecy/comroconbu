@@ -1,3 +1,4 @@
+import { join } from "node:path"
 import { readdirSync } from "node:fs"
 
 // eslint-disable-next-line no-unused-vars
@@ -5,8 +6,6 @@ import AbstractExternalPackage from "../abstract_external_package"
 import AbstractSourceFile from "../abstract_source_file"
 // eslint-disable-next-line no-unused-vars
 import CommonInfo from "../common_info"
-// eslint-disable-next-line no-unused-vars
-import RelativePathPair from "./relative_path_pair"
 // eslint-disable-next-line no-unused-vars
 import RelativePathPairBuilder from "./relative_path_pair_builder"
 import UnnamedSourceFile from "./unnamed_source_file"
@@ -37,8 +36,11 @@ export default class SourceDirectory extends AbstractSourceFile {
 			const currentDirectory = directories.shift()
 
 			readdirSync(currentDirectory, { "withFileTypes": true }).forEach(relativePath => {
-				const { name } = relativePath
-				const pathPair = pathPairBuilder.build(name, name)
+				const relativePathToInput = join(
+					currentDirectory.slice(inputDirectory.length === 0 ? 0 : inputDirectory.length + 1),
+					relativePath.name
+				)
+				const pathPair = pathPairBuilder.build(relativePathToInput, relativePathToInput)
 				if (relativePath.isFile()) {
 					const sourceFile = new UnnamedSourceFile(
 						commonInfo,
@@ -50,7 +52,7 @@ export default class SourceDirectory extends AbstractSourceFile {
 					)
 					this._sourceFiles.push(sourceFile)
 				} else {
-					directories.push(pathPair.originalCompleteInputPath)
+					directories.push(join(currentDirectory, relativePath.name))
 				}
 			})
 		}
