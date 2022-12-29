@@ -24,23 +24,32 @@ export default class RelativePathPair {
 	/**
 	 * Gets the original input path that was passed.
 	 *
-	 * Implementors should not override this mthod.
+	 * Implementors should not override this method.
 	 */
 	get originalRelativeInputPath() {
 		return this._inputPath
 	}
 
 	/**
+	 * Gets the original input path joined with input directory.
+	 *
+	 * Implementors should not override this method.
+	 */
+	get originalCompleteInputPath() {
+		return join(this._commonInfo.inputDirectory, this.originalRelativeInputPath)
+	}
+
+	/**
 	 * Gets the input path joined with input directory.
 	 */
 	get completeInputPath() {
-		return join(this._commonInfo.inputDirectory, this.originalRelativeInputPath)
+		return this.originalCompleteInputPath
 	}
 
 	/**
 	 * Gets the original output path that was passed.
 	 *
-	 * Implementors should not override this mthod.
+	 * Implementors should not override this method.
 	 */
 	get originalRelativeOutputPath() {
 		return this._outputPath
@@ -48,8 +57,17 @@ export default class RelativePathPair {
 
 	/**
 	 * Gets the output path joined with output directory.
+	 *
+	 * Implementors should not override this method.
+	 */
+	get originalCompleteOutputPath() {
+		return join(this._commonInfo.outputDirectory, this.originalRelativeOutputPath)
+	}
+
+	/**
+	 * Gets the output path joined with output directory.
 	 */
 	get completeOutputPath() {
-		return join(this._commonInfo.outputDirectory, this.originalRelativeOutputPath)
+		return this.originalCompleteOutputPath
 	}
 }
