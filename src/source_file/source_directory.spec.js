@@ -1,71 +1,76 @@
 /* eslint-disable max-lines-per-function */
-import { sep } from "path"
+import { sep } from "node:path"
 
 import { expect } from "chai"
 
 import CommonInfo from "../common_info"
-import { ImportedExternalPackage, SourceDirectory, UnnamedSourceFile, interop } from ".."
+import ImportedExternalPackage from "../external_package/imported_external_package"
+import RelativePathPairBuilder from "./relative_path_pair_builder"
+import SourceDirectory from "./source_directory"
+import UnnamedSourceFile from "./unnamed_source_file"
+import interop from "../interop"
 
 describe("Source directory", () => {
 	it("can scan directory", () => {
-		const inputDirectory = "t/dummy"
+		const inputDirectory = `t${sep}dummy`
 		const outputDirectory = "a"
 		const outputFormat = "b"
 		const plugins = []
 		const externals = []
-		const renamer = path => path
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
+		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
 			externals,
-			renamer
+			pathPairBuilder
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, "README.md", [], []),
-			new UnnamedSourceFile(commonInfo, "a.js", [], []),
-			new UnnamedSourceFile(commonInfo, `b${sep}c.js`, [], [])
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("README.md"), [], []),
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("a.js"), [], []),
+			new UnnamedSourceFile(commonInfo, pathPairBuilder.build(`b${sep}c.js`), [], [])
 		])
 	})
 
+
 	it("can become into configuration array without externals and plugins", () => {
-		const inputDirectory = "t/dummy"
+		const inputDirectory = `t${sep}dummy`
 		const outputDirectory = "c"
 		const outputFormat = "d"
 		const plugins = []
 		const externals = []
-		const renamer = path => path
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
+		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
 			externals,
-			renamer
+			pathPairBuilder
 		)
 
 		const configurationArray = sourceDirectory.toConfigurationArray()
 
 		expect(configurationArray).to.deep.equal([
 			{
-				"input": "t/dummy/README.md",
+				"input": `t${sep}dummy${sep}README.md`,
 				"output": {
-					"file": "c/README.md",
+					"file": `c${sep}README.md`,
 					"format": "d",
 					interop
 				}
 			}, {
-				"input": "t/dummy/a.js",
+				"input": `t${sep}dummy${sep}a.js`,
 				"output": {
-					"file": "c/a.js",
+					"file": `c${sep}a.js`,
 					"format": "d",
 					interop
 				}
 			}, {
-				"input": `t/dummy/b${sep}c.js`,
+				"input": `t${sep}dummy${sep}b${sep}c.js`,
 				"output": {
-					"file": `c/b${sep}c.js`,
+					"file": `c${sep}b${sep}c.js`,
 					"format": "d",
 					interop
 				}
@@ -74,7 +79,7 @@ describe("Source directory", () => {
 	})
 
 	it("can include external packages in configuration array", () => {
-		const inputDirectoryA = "t/dummy/b"
+		const inputDirectoryA = `t${sep}dummy${sep}b`
 		const outputDirectoryA = "e"
 		const outputFormatA = "f"
 		const inputDirectoryB = "g"
@@ -94,12 +99,13 @@ describe("Source directory", () => {
 				[]
 			)
 		]
-		const renamer = path => path
+		const commonInfo = new CommonInfo(inputDirectoryA, outputDirectoryA, outputFormatA)
+		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 		const sourceDirectory = new SourceDirectory(
-			new CommonInfo(inputDirectoryA, outputDirectoryA, outputFormatA),
+			commonInfo,
 			plugins,
 			externals,
-			renamer
+			pathPairBuilder
 		)
 
 		const configurationArray = sourceDirectory.toConfigurationArray()
@@ -107,9 +113,9 @@ describe("Source directory", () => {
 		expect(configurationArray).to.deep.equal([
 			{
 				"external": [ "j" ],
-				"input": "t/dummy/b/c.js",
+				"input": `t${sep}dummy${sep}b${sep}c.js`,
 				"output": {
-					"file": "e/c.js",
+					"file": `e${sep}c.js`,
 					"format": "f",
 					"globals": {
 						"j": "k"
@@ -117,9 +123,9 @@ describe("Source directory", () => {
 					interop
 				}
 			}, {
-				"input": "g/l.js",
+				"input": `g${sep}l.js`,
 				"output": {
-					"file": "h/l.js",
+					"file": `h${sep}l.js`,
 					"format": "i",
 					interop,
 					"name": "k"
@@ -129,19 +135,23 @@ describe("Source directory", () => {
 	})
 
 	it("can rename path", () => {
-		const inputDirectory = "t/dummy"
+		const inputDirectory = `t${sep}dummy`
 		const outputDirectory = "m"
 		const outputFormat = "n"
 		const plugins = []
 		const externals = []
-		const renamer = path => `${path}.sample`
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
+		const pathPairBuilder = new class extends RelativePathPairBuilder {
+			get completeOutputPath() {
+				return `${super.completeOutputPath}.sample`
+			}
+		}(commonInfo)
 
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
 			externals,
-			renamer
+			pathPairBuilder
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
