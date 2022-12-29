@@ -1,4 +1,6 @@
 /* eslint-disable max-lines-per-function */
+import { sep } from "path"
+
 import { expect } from "chai"
 
 import CommonInfo from "../common_info"
@@ -113,11 +115,12 @@ describe("Named source file", () => {
 			const outputDirectory = "b"
 			const outputFormat = "c"
 			const name = "d"
-			const file = "e.js"
+			const inputFile = "e.js"
+			const outputFile = "r.js"
 			const plugins = []
 			const externals = []
 			const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-			const pathPair = new RelativePathPair(commonInfo, file, file)
+			const pathPair = new RelativePathPair(commonInfo, inputFile, outputFile)
 			const sourceFile = new NamedSourceFile(
 				commonInfo,
 				name,
@@ -129,9 +132,9 @@ describe("Named source file", () => {
 			const configurations = sourceFile.toConfigurationArray()
 
 			expect(configurations).to.deep.equal([ {
-				"input": "a/e.js",
+				"input": `a${sep}e.js`,
 				"output": {
-					"file": "b/e.js",
+					"file": `b${sep}r.js`,
 					"format": "c",
 					interop,
 					"name": "d"
@@ -144,11 +147,12 @@ describe("Named source file", () => {
 			const outputDirectory = "g"
 			const outputFormat = "h"
 			const name = "i"
-			const file = "j.js"
+			const inputFile = "j.js"
+			const outputFile = "s.js"
 			const plugins = [ () => {} ]
 			const externals = []
 			const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-			const pathPair = new RelativePathPair(commonInfo, file, file)
+			const pathPair = new RelativePathPair(commonInfo, inputFile, outputFile)
 			const sourceFile = new NamedSourceFile(
 				commonInfo,
 				name,
@@ -160,9 +164,9 @@ describe("Named source file", () => {
 			const configurations = sourceFile.toConfigurationArray()
 
 			expect(configurations).to.deep.equal([ {
-				"input": "f/j.js",
+				"input": `f${sep}j.js`,
 				"output": {
-					"file": "g/j.js",
+					"file": `g${sep}s.js`,
 					"format": "h",
 					interop,
 					"name": "i"
@@ -176,7 +180,8 @@ describe("Named source file", () => {
 			const outputDirectory = "l"
 			const outputFormat = "m"
 			const name = "n"
-			const file = "o.js"
+			const inputFile = "o.js"
+			const outputFile = "t.js"
 			const plugins = [ () => {} ]
 			const externalName = "p"
 			const globalName = "q"
@@ -184,7 +189,7 @@ describe("Named source file", () => {
 				new LinkedExternalPackage(externalName, globalName)
 			]
 			const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-			const pathPair = new RelativePathPair(commonInfo, file, file)
+			const pathPair = new RelativePathPair(commonInfo, inputFile, outputFile)
 			const sourceFile = new NamedSourceFile(
 				commonInfo,
 				name,
@@ -197,9 +202,9 @@ describe("Named source file", () => {
 
 			expect(configurations).to.deep.equal([ {
 				"external": [ "p" ],
-				"input": "k/o.js",
+				"input": `k${sep}o.js`,
 				"output": {
-					"file": "l/o.js",
+					"file": `l${sep}t.js`,
 					"format": "m",
 					"globals": {
 						"p": "q"
