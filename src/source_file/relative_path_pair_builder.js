@@ -17,9 +17,10 @@ export default class RelativePathPairBuilder {
 	 * return a different path pair for compilation.
 	 *
 	 * @param {string} inputPath Path to source file.
-	 * @param {string} outputPath Path to bundled file.
+	 * @param {string|null} [outputPath=null] Path to bundled file. If not provided, it will the same
+	 *                                        as input path.
 	 */
-	build(inputPath, outputPath) {
-		return new RelativePathPair(this._commonInfo, inputPath, outputPath)
+	build(inputPath, outputPath = null) {
+		return new RelativePathPair(this._commonInfo, inputPath, outputPath ?? inputPath)
 	}
 }
