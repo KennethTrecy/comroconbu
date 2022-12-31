@@ -6,7 +6,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/KennethTrecy/comroconbu?style=for-the-badge)
 ![Lines of code](https://img.shields.io/tokei/lines/github/KennethTrecy/comroconbu?style=for-the-badge)
 ![GitHub code size in bytes](https://img.shields.io/github/repo-size/KennethTrecy/comroconbu?style=for-the-badge)
-![GitHub top language](https://img.shields.io/github/languages/top/KennethTrecy/comroconbu?style=for-the-badge)
+
 # Comroconbu
 > Builds configuration that can be used by [Rollup]. It will be based from
 common patterns of configuration in my personal projects.
