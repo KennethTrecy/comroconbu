@@ -21,7 +21,8 @@ export default class AbstractSourceFile {
 	 *    "plugins": any[]
 	 * }[]} An array of configurations. Note that `output.globals` and `external` are optional.
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	toConfigurationArray() {
-		throw new TypeError("Cannot convert an abstract source to array of configurations.");
+		throw new TypeError("Cannot convert an abstract source to array of configurations.")
 	}
 }
