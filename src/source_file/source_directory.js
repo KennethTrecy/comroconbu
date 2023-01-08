@@ -7,7 +7,7 @@ import AbstractSourceFile from "../abstract_source_file"
 // eslint-disable-next-line no-unused-vars
 import CommonInfo from "../common_info"
 // eslint-disable-next-line no-unused-vars
-import RelativePathPairBuilder from "./relative_path_pair_builder"
+import RelativePathPair from "./relative_path_pair"
 import UnnamedSourceFile from "./unnamed_source_file"
 
 /**
@@ -23,9 +23,8 @@ export default class SourceDirectory extends AbstractSourceFile {
 	 *                                                      source or function that receives the
 	 *                                                      relative path pair from builder.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
-	 * @param {RelativePathPairBuilder} pathPairBuilder Class to create relative paths.
 	 */
-	constructor(commonInfo, plugins, externals, pathPairBuilder) {
+	constructor(commonInfo, plugins, externals) {
 		super()
 		this._sourceFiles = []
 		this._externals = externals
@@ -40,22 +39,51 @@ export default class SourceDirectory extends AbstractSourceFile {
 					currentDirectory.slice(inputDirectory.length === 0 ? 0 : inputDirectory.length + 1),
 					relativePath.name
 				)
-				const pathPair = pathPairBuilder.build(relativePathToInput, relativePathToInput)
 				if (relativePath.isFile()) {
-					const sourceFile = new UnnamedSourceFile(
-						commonInfo,
-						pathPair,
-						typeof plugins === "function"
-							? plugins(pathPair)
-							: plugins,
-						externals
-					)
-					this._sourceFiles.push(sourceFile)
+					const pathPair = this.buildPathPair(commonInfo, relativePathToInput)
+
+					if (this.shouldBeIncluded(pathPair)) {
+						const sourceFile = new UnnamedSourceFile(
+							commonInfo,
+							pathPair,
+							typeof plugins === "function"
+								? plugins(pathPair)
+								: plugins,
+							externals
+						)
+						this._sourceFiles.push(sourceFile)
+					}
 				} else {
 					directories.push(join(currentDirectory, relativePath.name))
 				}
 			})
 		}
+	}
+
+	/**
+	 * Builds a relative path. Ideally, this should be overriden if the developer want to
+	 * return a different path pair for compilation.
+	 *
+	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
+	 * @param {string} inputPath Path to source file relative to input directory.
+	 * @return {RelativePathPair} The built relative path pair
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	buildPathPair(commonInfo, inputPath) {
+		return new RelativePathPair(commonInfo, inputPath, inputPath)
+	}
+
+	/**
+	 * Determines if a path pair should be included in the configuration array.
+	 *
+	 * @param {RelativePathPair} pathPair The pair of I/O paths to be evaluated.
+	 *
+	 * @return {boolean} If true, the path pair will be included configuration array. Otherwise, the
+	 *                   pairs would not be processed.
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	shouldBeIncluded(_pathPair) {
+		return true
 	}
 
 	toConfigurationArray() {

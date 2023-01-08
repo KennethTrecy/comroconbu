@@ -3,12 +3,12 @@ import { sep } from "node:path"
 
 import { expect } from "chai"
 
+import interop from "../interop"
+
 import CommonInfo from "../common_info"
 import ImportedExternalPackage from "../external_package/imported_external_package"
-import RelativePathPairBuilder from "./relative_path_pair_builder"
 import SourceDirectory from "./source_directory"
 import UnnamedSourceFile from "./unnamed_source_file"
-import interop from "../interop"
 
 describe("Source directory", () => {
 	it("can scan directory", () => {
@@ -18,19 +18,32 @@ describe("Source directory", () => {
 		const plugins = []
 		const externals = []
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
-			externals,
-			pathPairBuilder
+			externals
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("README.md"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("a.js"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build(`b${sep}c.js`), [], [])
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, "README.md"),
+				[],
+				[]
+			),
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, "a.js"),
+				[],
+				[]
+			),
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, `b${sep}c.js`),
+				[],
+				[]
+			)
 		])
 	})
 
@@ -42,12 +55,10 @@ describe("Source directory", () => {
 		const plugins = []
 		const externals = []
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
-			externals,
-			pathPairBuilder
+			externals
 		)
 
 		const configurationArray = sourceDirectory.toConfigurationArray()
@@ -100,12 +111,10 @@ describe("Source directory", () => {
 			)
 		]
 		const commonInfo = new CommonInfo(inputDirectoryA, outputDirectoryA, outputFormatA)
-		const pathPairBuilder = new RelativePathPairBuilder(commonInfo)
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
-			externals,
-			pathPairBuilder
+			externals
 		)
 
 		const configurationArray = sourceDirectory.toConfigurationArray()
@@ -141,23 +150,32 @@ describe("Source directory", () => {
 		const plugins = []
 		const externals = []
 		const commonInfo = new CommonInfo(inputDirectory, outputDirectory, outputFormat)
-		const pathPairBuilder = new class extends RelativePathPairBuilder {
-			get completeOutputPath() {
-				return `${super.completeOutputPath}.sample`
-			}
-		}(commonInfo)
 
 		const sourceDirectory = new SourceDirectory(
 			commonInfo,
 			plugins,
-			externals,
-			pathPairBuilder
+			externals
 		)
 
 		expect(sourceDirectory._sourceFiles).to.deep.equal([
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("README.md"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build("a.js"), [], []),
-			new UnnamedSourceFile(commonInfo, pathPairBuilder.build(`b${sep}c.js`), [], [])
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, "README.md"),
+				[],
+				[]
+			),
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, "a.js"),
+				[],
+				[]
+			),
+			new UnnamedSourceFile(
+				commonInfo,
+				sourceDirectory.buildPathPair(commonInfo, `b${sep}c.js`),
+				[],
+				[]
+			)
 		])
 	})
 })
