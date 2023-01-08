@@ -6,6 +6,23 @@ var node_path = require('node:path');
 var node_fs = require('node:fs');
 
 /**
+ * Represents a container for common info.
+ */
+class CommonInfo {
+	/**
+	 * Creates a simple container for common info.
+	 * @param {string} inputDirectory Directory of source files.
+	 * @param {string} outputDirectory Directory of bundled files.
+	 * @param {string} outputFormat Output format for bundled files.
+	 */
+	constructor(inputDirectory, outputDirectory, outputFormat) {
+		this.inputDirectory = inputDirectory;
+		this.outputDirectory = outputDirectory;
+		this.outputFormat = outputFormat;
+	}
+}
+
+/**
  * An abstraction of source file.
  */
 class AbstractSourceFile {
@@ -28,8 +45,9 @@ class AbstractSourceFile {
 	 *    "plugins": any[]
 	 * }[]} An array of configurations. Note that `output.globals` and `external` are optional.
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	toConfigurationArray() {
-		throw new TypeError("Cannot convert an abstract source to array of configurations.");
+		throw new TypeError("Cannot convert an abstract source to array of configurations.")
 	}
 }
 
@@ -57,23 +75,6 @@ class AbstractExternalPackage extends AbstractSourceFile {
 		return {
 			[this._externalName]: this._globalName
 		};
-	}
-}
-
-/**
- * Represents a container for common info.
- */
-class CommonInfo {
-	/**
-	 * Creates a simple container for common info.
-	 * @param {string} inputDirectory Directory of source files.
-	 * @param {string} outputDirectory Directory of bundled files.
-	 * @param {string} outputFormat Output format for bundled files.
-	 */
-	constructor(inputDirectory, outputDirectory, outputFormat) {
-		this.inputDirectory = inputDirectory;
-		this.outputDirectory = outputDirectory;
-		this.outputFormat = outputFormat;
 	}
 }
 
@@ -375,31 +376,6 @@ class RebundledExternalPackage extends AbstractExternalPackage {
 }
 
 /**
- * Represents a builder for relative path pair.
- */
-class RelativePathPairBuilder {
-	/**
-	 * Creates a representation of collection of files.
-	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
-	 */
-	constructor(commonInfo) {
-		this._commonInfo = commonInfo;
-	}
-
-	/**
-	 * Method to build a relative path. Ideally, this should be override if the developer want to
-	 * return a different path pair for compilation.
-	 *
-	 * @param {string} inputPath Path to source file.
-	 * @param {string|null} [outputPath=null] Path to bundled file. If not provided, it will the same
-	 *                                        as input path.
-	 */
-	build(inputPath, outputPath = null) {
-		return new RelativePathPair(this._commonInfo, inputPath, outputPath ?? inputPath)
-	}
-}
-
-/**
  * Represent a collection source files within the directory.
  *
  * It will search the files using the input directory from common information.
@@ -412,9 +388,8 @@ class SourceDirectory extends AbstractSourceFile {
 	 *                                                      source or function that receives the
 	 *                                                      relative path pair from builder.
 	 * @param {AbstractExternalPackage[]} externals Array of common external packages.
-	 * @param {RelativePathPairBuilder} pathPairBuilder Class to create relative paths.
 	 */
-	constructor(commonInfo, plugins, externals, pathPairBuilder) {
+	constructor(commonInfo, plugins, externals) {
 		super();
 		this._sourceFiles = [];
 		this._externals = externals;
@@ -429,22 +404,51 @@ class SourceDirectory extends AbstractSourceFile {
 					currentDirectory.slice(inputDirectory.length === 0 ? 0 : inputDirectory.length + 1),
 					relativePath.name
 				);
-				const pathPair = pathPairBuilder.build(relativePathToInput, relativePathToInput);
 				if (relativePath.isFile()) {
-					const sourceFile = new UnnamedSourceFile(
-						commonInfo,
-						pathPair,
-						typeof plugins === "function"
-							? plugins(pathPair)
-							: plugins,
-						externals
-					);
-					this._sourceFiles.push(sourceFile);
+					const pathPair = this.buildPathPair(commonInfo, relativePathToInput);
+
+					if (this.shouldBeIncluded(pathPair)) {
+						const sourceFile = new UnnamedSourceFile(
+							commonInfo,
+							pathPair,
+							typeof plugins === "function"
+								? plugins(pathPair)
+								: plugins,
+							externals
+						);
+						this._sourceFiles.push(sourceFile);
+					}
 				} else {
 					directories.push(node_path.join(currentDirectory, relativePath.name));
 				}
 			});
 		}
+	}
+
+	/**
+	 * Builds a relative path. Ideally, this should be overriden if the developer want to
+	 * return a different path pair for compilation.
+	 *
+	 * @param {CommonInfo} commonInfo Common information needed to bundle the files.
+	 * @param {string} inputPath Path to source file relative to input directory.
+	 * @return {RelativePathPair} The built relative path pair
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	buildPathPair(commonInfo, inputPath) {
+		return new RelativePathPair(commonInfo, inputPath, inputPath)
+	}
+
+	/**
+	 * Determines if a path pair should be included in the configuration array.
+	 *
+	 * @param {RelativePathPair} pathPair The pair of I/O paths to be evaluated.
+	 *
+	 * @return {boolean} If true, the path pair will be included configuration array. Otherwise, the
+	 *                   pairs would not be processed.
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	shouldBeIncluded(_pathPair) {
+		return true
 	}
 
 	toConfigurationArray() {
@@ -515,15 +519,13 @@ class CommonInfoBuilder {
 	 * @param {AbstractExternalPackage[]} [externals=[]] Optional. Array of common external packages
 	 *                                    that will not be included in the configuration of each
 	 *                                    source file.
-	 * @param {RelativePathPairBuilder} pathPairBuilder Builder instance to create relative paths.
 	 * @returns {SourceDirectory} A representation of source directory.
 	 */
 	configureSourceDirectory(
 		plugins,
-		externals = [],
-		pathPairBuilder = new RelativePathPairBuilder()
+		externals = []
 	) {
-		return new SourceDirectory(this._commonInfo, plugins, externals, pathPairBuilder)
+		return new SourceDirectory(this._commonInfo, plugins, externals)
 	}
 
 	/**
@@ -553,6 +555,7 @@ class CommonInfoBuilder {
 	 * @param {string} globalName The global variable that identifies the linked external package.
 	 * @returns {LinkedExternalPackage} A representation of linked external package.
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	linkExternalPackage(externalName, globalName) {
 		return new LinkedExternalPackage(externalName, globalName)
 	}
@@ -590,13 +593,13 @@ class CommonInfoBuilder {
 	}
 }
 
+exports.CommonInfo = CommonInfo;
 exports.CommonInfoBuilder = CommonInfoBuilder;
 exports.ImportedExternalPackage = ImportedExternalPackage;
 exports.LinkedExternalPackage = LinkedExternalPackage;
 exports.NamedSourceFile = NamedSourceFile;
 exports.RebundledExternalPackage = RebundledExternalPackage;
 exports.RelativePathPair = RelativePathPair;
-exports.RelativePathPairBuilder = RelativePathPairBuilder;
 exports.SourceDirectory = SourceDirectory;
 exports.UnnamedSourceFile = UnnamedSourceFile;
 exports.interop = interop;
